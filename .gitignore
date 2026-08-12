@@ -8,3 +8,6 @@ out/
 .wrangler/
 .impeccable/screenshots/
 .impeccable/fixtures/
+
+# TypeScript incremental build info
+tsconfig.tsbuildinfo

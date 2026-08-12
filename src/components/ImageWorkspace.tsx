@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
+import { Select } from "@/components/Select";
 import { formatBytes, outputName } from "@/lib/tools";
 
 type ImageMode = "convert" | "compress" | "resize";
@@ -196,11 +197,14 @@ export function ImageWorkspace({
 
           <label className="field-label">
             Format
-            <select value={format} onChange={(event) => setFormat(event.target.value as ImageFormat)}>
-              {Object.entries(formatLabels)
+            <Select
+              ariaLabel="Output format"
+              value={format}
+              onChange={(value) => setFormat(value as ImageFormat)}
+              options={Object.entries(formatLabels)
                 .filter(([value]) => mode !== "compress" || value !== "image/png")
-                .map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-            </select>
+                .map(([value, label]) => ({ value, label }))}
+            />
           </label>
 
           {mode === "resize" && (

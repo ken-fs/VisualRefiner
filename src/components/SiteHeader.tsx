@@ -14,6 +14,7 @@ export function SiteHeader() {
         <Link href="/image-converter">Images</Link>
         <Link href="/video-converter">Video</Link>
         <Link href="/#all-tools">All tools</Link>
+        <Link href="/guides">Guides</Link>
         <span className="local-chip">
           <Icon icon="ph:shield-check" width="17" aria-hidden="true" />
           Local by default

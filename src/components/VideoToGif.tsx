@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
+import { Select } from "@/components/Select";
 import { formatBytes, outputName } from "@/lib/tools";
 
 export function VideoToGif() {
@@ -90,14 +91,28 @@ export function VideoToGif() {
           <Icon icon="ph:film-reel" width="20" />{file ? file.name : "Choose a short video"}
         </button>
         <label className="field-label">Width
-          <select value={width} onChange={(event) => setWidth(Number(event.target.value))}>
-            <option value="320">320 px</option><option value="480">480 px</option><option value="640">640 px</option>
-          </select>
+          <Select
+            ariaLabel="Width"
+            value={String(width)}
+            onChange={(value) => setWidth(Number(value))}
+            options={[
+              { value: "320", label: "320 px" },
+              { value: "480", label: "480 px" },
+              { value: "640", label: "640 px" },
+            ]}
+          />
         </label>
         <label className="field-label">Speed
-          <select value={fps} onChange={(event) => setFps(Number(event.target.value))}>
-            <option value="6">6 fps</option><option value="8">8 fps</option><option value="12">12 fps</option>
-          </select>
+          <Select
+            ariaLabel="Speed"
+            value={String(fps)}
+            onChange={(value) => setFps(Number(value))}
+            options={[
+              { value: "6", label: "6 fps" },
+              { value: "8", label: "8 fps" },
+              { value: "12", label: "12 fps" },
+            ]}
+          />
         </label>
         <button className="primary-action" type="button" disabled={busy} onClick={() => void createGif()}>
           <Icon icon={busy ? "ph:circle-notch" : "ph:gif"} className={busy ? "spin" : ""} width="20" />
