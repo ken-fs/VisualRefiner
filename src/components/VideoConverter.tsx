@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
+import { Select } from "@/components/Select";
 import { formatBytes, outputName } from "@/lib/tools";
 
 type OutputFormat = "mp4" | "webm";
@@ -88,10 +89,15 @@ export function VideoConverter() {
           <div className="control-heading"><span>Output</span><span>WebCodecs</span></div>
           <label className="field-label">
             Format
-            <select value={format} onChange={(event) => setFormat(event.target.value as OutputFormat)}>
-              <option value="mp4">MP4</option>
-              <option value="webm">WebM</option>
-            </select>
+            <Select
+              ariaLabel="Output format"
+              value={format}
+              onChange={(value) => setFormat(value as OutputFormat)}
+              options={[
+                { value: "mp4", label: "MP4" },
+                { value: "webm", label: "WebM" },
+              ]}
+            />
           </label>
           <button className="primary-action" type="button" disabled={busy} onClick={() => void convert()}>
             <Icon icon={busy ? "ph:circle-notch" : "ph:arrows-clockwise"} className={busy ? "spin" : ""} width="20" />

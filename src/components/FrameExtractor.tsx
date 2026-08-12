@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
+import { Select } from "@/components/Select";
 import { outputName } from "@/lib/tools";
 
 type Frame = { url: string; timestamp: number };
@@ -67,9 +68,16 @@ export function FrameExtractor() {
         </button>
         <label className="field-label frame-count">
           Frames
-          <select value={count} onChange={(event) => setCount(Number(event.target.value))}>
-            <option value="4">4</option><option value="8">8</option><option value="12">12</option>
-          </select>
+          <Select
+            ariaLabel="Frames"
+            value={String(count)}
+            onChange={(value) => setCount(Number(value))}
+            options={[
+              { value: "4", label: "4" },
+              { value: "8", label: "8" },
+              { value: "12", label: "12" },
+            ]}
+          />
         </label>
         <button className="primary-action" type="button" disabled={busy} onClick={() => void extract()}>
           <Icon icon={busy ? "ph:circle-notch" : "ph:selection-background"} className={busy ? "spin" : ""} width="20" />
