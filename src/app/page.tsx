@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import { ImageWorkspace } from "@/components/ImageWorkspace";
 import { PrivacyPath } from "@/components/PrivacyPath";
 import { ToolIndex } from "@/components/ToolIndex";
+import { conversions } from "@/lib/conversions";
 
 export default function HomePage() {
   return (
@@ -55,6 +56,31 @@ export default function HomePage() {
             <p>Try MP4 first. Use WebM for modern web playback.</p>
             <Link href="/video-converter">Convert a video</Link>
           </article>
+        </div>
+      </section>
+
+      <section className="conversion-directory" aria-labelledby="conversions-title">
+        <div className="conversion-directory-head">
+          <h2 id="conversions-title">Popular conversions.</h2>
+          <p>Every format pair runs locally. Pick the one you need.</p>
+        </div>
+        <div className="conversion-columns">
+          <div>
+            <h3>Images</h3>
+            <ul>
+              {conversions.filter((c) => c.group === "image").map((c) => (
+                <li key={c.slug}><Link href={c.slug}>{c.label}<Icon icon="ph:arrow-up-right" width="15" aria-hidden="true" /></Link></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3>Video</h3>
+            <ul>
+              {conversions.filter((c) => c.group === "video").map((c) => (
+                <li key={c.slug}><Link href={c.slug}>{c.label}<Icon icon="ph:arrow-up-right" width="15" aria-hidden="true" /></Link></li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
     </main>

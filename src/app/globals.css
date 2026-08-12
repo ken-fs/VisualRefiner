@@ -384,6 +384,18 @@ button:disabled { cursor: wait; opacity: 0.68; }
 .format-notes a { font-weight: 850; }
 .format-notes article:last-child h3, .format-notes article:last-child p { margin: 0; }
 
+.conversion-directory { width: var(--page); margin: 120px auto; }
+.conversion-directory-head { display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: end; gap: 40px; margin-bottom: 32px; }
+.conversion-directory-head h2 { margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2.7rem, 5vw, 5rem); line-height: 0.94; letter-spacing: -0.04em; }
+.conversion-directory-head p { margin: 0; padding-bottom: 5px; color: var(--muted); font-size: 1.05rem; }
+.conversion-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; border-top: 2px solid var(--ink); padding-top: 28px; }
+.conversion-columns h3 { margin: 0 0 8px; color: var(--muted); font-size: 0.75rem; font-weight: 850; letter-spacing: 0.07em; text-transform: uppercase; }
+.conversion-columns ul { margin: 0; padding: 0; list-style: none; }
+.conversion-columns li { border-bottom: 1px solid var(--line); }
+.conversion-columns a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px; color: var(--ink); font-weight: 800; text-decoration: none; transition: padding 160ms cubic-bezier(0.16, 1, 0.3, 1); }
+.conversion-columns a:hover { padding-left: 10px; }
+.conversion-columns a svg { flex: none; color: var(--action-dark); }
+
 .tool-page { width: var(--page); margin: 44px auto 110px; }
 .back-link { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-weight: 800; }
 .tool-page-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 60px; align-items: end; margin: 44px 0 34px; }
@@ -470,6 +482,7 @@ button:disabled { cursor: wait; opacity: 0.68; }
   .tool-row-formats { display: none; }
   .privacy-path { grid-template-columns: 1fr; gap: 45px; }
   .format-guide { grid-template-columns: 1fr; gap: 45px; }
+  .conversion-directory-head, .conversion-columns { grid-template-columns: 1fr; gap: 24px; }
   .tool-page-header { grid-template-columns: 1fr; gap: 24px; }
   .tool-note { width: fit-content; }
   .frame-controls, .gif-controls { grid-template-columns: 1fr 1fr; }
