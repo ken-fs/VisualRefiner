@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { JsonLd } from "@/components/JsonLd";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { guides } from "@/lib/guides";
 
 export const metadata: Metadata = {
@@ -14,7 +14,17 @@ export const metadata: Metadata = {
 export default function GuidesPage() {
   return (
     <main className="prose-page guides-index">
-      <JsonLd data={breadcrumbSchema([{ name: "Home", slug: "/" }, { name: "Guides", slug: "/guides" }])} />
+      <JsonLd
+        data={[
+          breadcrumbSchema([{ name: "Home", slug: "/" }, { name: "Guides", slug: "/guides" }]),
+          collectionPageSchema({
+            name: "Guides — VisualRefiner",
+            description: "Plain-language guides to image and video formats.",
+            slug: "/guides",
+            items: guides.map((g) => ({ name: g.title, slug: g.slug })),
+          }),
+        ]}
+      />
       <h1>Guides</h1>
       <p>
         Format names are confusing and the right choice depends on what you need. These short guides explain the

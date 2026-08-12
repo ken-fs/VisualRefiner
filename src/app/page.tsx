@@ -3,11 +3,15 @@ import { Icon } from "@iconify/react";
 import { ImageWorkspace } from "@/components/ImageWorkspace";
 import { PrivacyPath } from "@/components/PrivacyPath";
 import { ToolIndex } from "@/components/ToolIndex";
+import { JsonLd } from "@/components/JsonLd";
 import { conversions } from "@/lib/conversions";
+import { tools } from "@/lib/tools";
+import { itemListSchema } from "@/lib/schema";
 
 export default function HomePage() {
   return (
     <main>
+      <JsonLd data={itemListSchema({ name: "VisualRefiner tools", items: tools.map((t) => ({ name: t.name, slug: t.slug })) })} />
       <section className="home-hero">
         <div className="hero-copy">
           <h1>Make visual files behave.</h1>

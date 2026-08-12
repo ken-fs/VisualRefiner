@@ -36,3 +36,32 @@ export const guides: GuideMeta[] = [
     datePublished: "2026-08-12",
   },
 ];
+
+// Maps a tool slug to the guides worth reading alongside it. Used to build the
+// "Related guides" block on tool pages so every tool links into the topic cluster.
+const toolGuideMap: Record<string, string[]> = {
+  "/image-converter": ["/guides/webp-vs-png"],
+  "/image-compressor": ["/guides/image-compression-quality", "/guides/webp-vs-png"],
+  "/image-resizer": ["/guides/image-compression-quality"],
+  "/video-converter": ["/guides/mp4-vs-webm"],
+  "/extract-video-frames": ["/guides/mp4-vs-webm"],
+  "/video-to-gif": ["/guides/mp4-vs-webm"],
+  "/png-to-jpg": ["/guides/webp-vs-png"],
+  "/jpg-to-png": ["/guides/webp-vs-png"],
+  "/png-to-webp": ["/guides/webp-vs-png"],
+  "/jpg-to-webp": ["/guides/webp-vs-png", "/guides/image-compression-quality"],
+  "/webp-to-png": ["/guides/webp-vs-png"],
+  "/webp-to-jpg": ["/guides/webp-vs-png"],
+  "/heic-to-jpg": ["/guides/heic-explained", "/guides/webp-vs-png"],
+  "/heic-to-png": ["/guides/heic-explained"],
+  "/heic-to-webp": ["/guides/heic-explained", "/guides/webp-vs-png"],
+  "/mov-to-mp4": ["/guides/mp4-vs-webm"],
+  "/mkv-to-mp4": ["/guides/mp4-vs-webm"],
+  "/webm-to-mp4": ["/guides/mp4-vs-webm"],
+};
+
+export function relatedGuides(toolSlug: string): GuideMeta[] {
+  return (toolGuideMap[toolSlug] ?? [])
+    .map((slug) => guides.find((g) => g.slug === slug))
+    .filter((g): g is GuideMeta => Boolean(g));
+}

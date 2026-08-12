@@ -17,11 +17,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "VisualRefiner",
-    title: "VisualRefiner — Local Image and Video Tools",
-    description: "Useful visual tools. Files stay in your browser.",
+    // No title/description here on purpose: Next falls og:title / og:description back to
+    // each page's own title/description, so every page gets a correct per-page card.
     url: "https://visualrefiner.com",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "VisualRefiner — local image and video tools" }],
   },
-  twitter: { card: "summary_large_image", title: "VisualRefiner", description: "Useful visual tools. Files stay in your browser." },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

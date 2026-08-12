@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema, faqSchema, webApplicationSchema, type Faq } from "@/lib/schema";
+import { relatedGuides } from "@/lib/guides";
 
 type ToolPageShellProps = {
   title: string;
@@ -11,15 +12,18 @@ type ToolPageShellProps = {
   slug: string;
   children: ReactNode;
   steps: string[];
+  explainer?: ReactNode;
   faqs?: Faq[];
 };
 
-export function ToolPageShell({ title, description, note, slug, children, steps, faqs }: ToolPageShellProps) {
+export function ToolPageShell({ title, description, note, slug, children, steps, explainer, faqs }: ToolPageShellProps) {
   const schema: object[] = [
     webApplicationSchema({ name: title, description, slug }),
     breadcrumbSchema([{ name: "Home", slug: "/" }, { name: title, slug }]),
   ];
   if (faqs?.length) schema.push(faqSchema(faqs));
+
+  const guides = relatedGuides(slug);
 
   return (
     <main className="tool-page">
@@ -45,6 +49,11 @@ export function ToolPageShell({ title, description, note, slug, children, steps,
           {steps.map((step) => <li key={step}>{step}</li>)}
         </ol>
       </section>
+      {explainer ? (
+        <section className="tool-explainer" aria-labelledby="learn-title">
+          {explainer}
+        </section>
+      ) : null}
       {faqs?.length ? (
         <section className="tool-faq" aria-labelledby="faq-title">
           <h2 id="faq-title">Questions</h2>
@@ -56,6 +65,21 @@ export function ToolPageShell({ title, description, note, slug, children, steps,
               </div>
             ))}
           </dl>
+        </section>
+      ) : null}
+      {guides.length ? (
+        <section className="tool-related" aria-labelledby="related-title">
+          <h2 id="related-title">Related guides</h2>
+          <ul>
+            {guides.map((guide) => (
+              <li key={guide.slug}>
+                <Link href={guide.slug}>
+                  {guide.title}
+                  <Icon icon="ph:arrow-up-right" width="16" aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
       ) : null}
     </main>

@@ -64,6 +64,47 @@ export function faqSchema(faqs: Faq[]) {
   };
 }
 
+export function itemListSchema(input: { name: string; items: { name: string; slug: string }[] }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: input.name,
+    numberOfItems: input.items.length,
+    itemListElement: input.items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: abs(item.slug),
+    })),
+  };
+}
+
+export function collectionPageSchema(input: {
+  name: string;
+  description: string;
+  slug: string;
+  items: { name: string; slug: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: input.name,
+    description: input.description,
+    url: abs(input.slug),
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: input.items.length,
+      itemListElement: input.items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        url: abs(item.slug),
+      })),
+    },
+  };
+}
+
 export function articleSchema(input: { title: string; description: string; slug: string; datePublished: string }) {
   return {
     "@context": "https://schema.org",
