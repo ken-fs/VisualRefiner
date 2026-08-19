@@ -24,6 +24,10 @@ means:
 
 There is no server-side processing, no tracking of your files, and no sign-up.
 
+For a technical deep-dive on how the in-browser conversion works (Canvas, WebCodecs,
+lazy-loaded WASM), read
+[Building image & video conversion that never leaves the browser](https://dev.to/ken_lee_fc82a8ce3a147aea6/building-image-video-conversion-that-never-leaves-the-browser-iga).
+
 ## Tools
 
 Each tool is a focused page that does one real task:
