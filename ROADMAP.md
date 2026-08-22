@@ -58,6 +58,46 @@ Output a copy-paste data URI for small images.
 - Needs: `FileReader`/Canvas only. New page `/image-to-base64`. Warn about size
   bloat for large images.
 
+## Future direction — accounts + AI features (needs product decision + backend)
+
+Goal (recorded 2026-08-22): add **registration / login** to gate **AI-powered
+capabilities** — e.g. AI watermark removal and other AI processing for images and
+video. This is a strategic shift, not a backlog item, because it breaks the
+current architecture and positioning in ways that need a deliberate decision
+before any code.
+
+**Why it's a bigger change than the backlog above**
+- The site is today a **static export, client-only, no-upload** app on Cloudflare.
+  AI watermark removal can't run client-side at usable quality — it needs a model
+  on a server, which means **files must be uploaded**. That directly contradicts
+  the "local, no upload" promise every current tool makes.
+- So it needs real backend surface the project doesn't have yet: an API
+  (Cloudflare Workers / Pages Functions or a separate service), user accounts,
+  sessions, and almost certainly usage limits or billing.
+
+**Positioning (important):** keep the existing free tools exactly as they are —
+local, no upload — and introduce AI tools as a **clearly separate, account-gated
+tier** that states plainly "these run on our servers; your file is uploaded and
+deleted after processing." Do not blur the two, or the trust story that sells the
+whole site erodes.
+
+**Building blocks to evaluate when this is picked up**
+- **Auth**: a provider (Clerk / Auth.js / Supabase Auth) or Cloudflare Access;
+  avoid rolling our own password store.
+- **Backend/AI**: an AI watermark-removal model or provider endpoint; a Worker to
+  proxy it, enforce auth, and meter usage.
+- **Storage**: R2 for transient uploads with a strict retention/delete policy.
+- **DB**: D1 or Postgres for users + usage counters.
+- **Billing / quota** (if paid or rate-limited): Stripe + per-user metering.
+
+**Open questions / risks**
+- Free vs paid, and where the free/paid line sits.
+- **Legal/ethical**: removing watermarks can raise copyright and platform-ToS
+  issues — needs a usage policy and probably an acceptable-use gate.
+- Data handling + privacy copy must be rewritten for the uploaded-file tools.
+- Whether AI tools live on this domain or a separate app to protect the
+  local-first brand.
+
 ## Notes / guardrails
 
 - Keep everything client-side; never add an upload path — it's the core promise.
