@@ -7,10 +7,10 @@ import { formatBytes, outputName } from "@/lib/tools";
 
 type OutputFormat = "mp4" | "webm";
 
-export function VideoConverter() {
+export function VideoConverter({ defaultFormat = "mp4" }: { defaultFormat?: OutputFormat }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [format, setFormat] = useState<OutputFormat>("mp4");
+  const [format, setFormat] = useState<OutputFormat>(defaultFormat);
   const [progress, setProgress] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");

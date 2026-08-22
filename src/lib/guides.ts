@@ -35,6 +35,20 @@ export const guides: GuideMeta[] = [
     hook: "Compatibility versus modern-web efficiency.",
     datePublished: "2026-08-12",
   },
+  {
+    slug: "/guides/remove-image-metadata",
+    title: "How to remove metadata (EXIF) from a photo",
+    description: "What EXIF and GPS metadata a photo carries, why it matters for privacy, and how to strip it without uploading the image.",
+    hook: "The hidden data in your photos — and how to clear it.",
+    datePublished: "2026-08-22",
+  },
+  {
+    slug: "/guides/avif-vs-webp",
+    title: "AVIF vs WebP: which modern image format?",
+    description: "How AVIF and WebP compare on size, quality, and browser support, and when each is the right pick.",
+    hook: "Two modern formats, one practical choice.",
+    datePublished: "2026-08-22",
+  },
 ];
 
 // Maps a tool slug to the guides worth reading alongside it. Used to build the
@@ -58,6 +72,12 @@ const toolGuideMap: Record<string, string[]> = {
   "/mov-to-mp4": ["/guides/mp4-vs-webm"],
   "/mkv-to-mp4": ["/guides/mp4-vs-webm"],
   "/webm-to-mp4": ["/guides/mp4-vs-webm"],
+  "/mp4-to-webm": ["/guides/mp4-vs-webm"],
+  "/mov-to-webm": ["/guides/mp4-vs-webm"],
+  "/mkv-to-webm": ["/guides/mp4-vs-webm"],
+  "/remove-metadata": ["/guides/remove-image-metadata"],
+  "/image-cropper": ["/guides/image-compression-quality"],
+  "/trim-video": ["/guides/mp4-vs-webm"],
 };
 
 export function relatedGuides(toolSlug: string): GuideMeta[] {

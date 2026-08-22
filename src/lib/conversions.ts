@@ -19,4 +19,7 @@ export const conversions: Conversion[] = [
   { slug: "/mov-to-mp4", label: "MOV to MP4", group: "video" },
   { slug: "/mkv-to-mp4", label: "MKV to MP4", group: "video" },
   { slug: "/webm-to-mp4", label: "WebM to MP4", group: "video" },
+  { slug: "/mp4-to-webm", label: "MP4 to WebM", group: "video" },
+  { slug: "/mov-to-webm", label: "MOV to WebM", group: "video" },
+  { slug: "/mkv-to-webm", label: "MKV to WebM", group: "video" },
 ];
