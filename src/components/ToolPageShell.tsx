@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema, faqSchema, webApplicationSchema, type Faq } from "@/lib/schema";
 import { relatedGuides } from "@/lib/guides";
+import { relatedTools } from "@/lib/tools";
 
 type ToolPageShellProps = {
   title: string;
@@ -24,6 +25,7 @@ export function ToolPageShell({ title, description, note, slug, children, steps,
   if (faqs?.length) schema.push(faqSchema(faqs));
 
   const guides = relatedGuides(slug);
+  const siblings = relatedTools(slug);
 
   return (
     <main className="tool-page">
@@ -76,6 +78,21 @@ export function ToolPageShell({ title, description, note, slug, children, steps,
                 <Link href={guide.slug}>
                   {guide.title}
                   <Icon icon="ph:arrow-up-right" width="16" aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {siblings.length ? (
+        <section className="tool-related" aria-labelledby="related-tools-title">
+          <h2 id="related-tools-title">Related tools</h2>
+          <ul>
+            {siblings.map((tool) => (
+              <li key={tool.slug}>
+                <Link href={tool.slug}>
+                  {tool.name}
+                  <Icon icon="ph:arrow-right" width="16" aria-hidden="true" />
                 </Link>
               </li>
             ))}

@@ -94,6 +94,15 @@ export const tools: ToolDefinition[] = [
   },
 ];
 
+// Sibling tools in the same group (image/video), used to cross-link tool pages.
+// Without this, a tool page's only internal links are the homepage grid and its
+// related guide — too thin for new pages to get crawled and indexed.
+export function relatedTools(slug: string): ToolDefinition[] {
+  const current = tools.find((t) => t.slug === slug);
+  if (!current) return [];
+  return tools.filter((t) => t.slug !== slug && t.group === current.group && t.available);
+}
+
 export function formatBytes(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 ** 2) return `${(bytes / 1024).toFixed(1)} KB`;

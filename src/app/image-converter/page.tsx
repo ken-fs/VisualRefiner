@@ -84,6 +84,12 @@ export default function ImageConverterPage() {
             <Link href="/image-compressor">image compressor</Link> gives you a quality control, and resizing
             the dimensions with the <Link href="/image-resizer">image resizer</Link> often saves even more.
           </p>
+          <p>
+            Re-saving through this converter also drops the photo&apos;s hidden EXIF and GPS metadata, so the
+            output is clean by default. If you only want to strip that data and keep the same format, the{" "}
+            <Link href="/remove-metadata">metadata remover</Link> reads what a photo carries and writes a clean
+            copy, all in your browser.
+          </p>
         </>
       }
       faqs={[
