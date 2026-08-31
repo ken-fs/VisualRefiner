@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Select } from "@/components/Select";
 import { formatBytes, outputName } from "@/lib/tools";
+import { scanImageMetadata, stripMetadataLossless, type ScanReport } from "@/lib/image-metadata";
 
 type MetaFormat = "image/jpeg" | "image/png" | "image/webp";
 const formatLabels: Record<MetaFormat, string> = {
@@ -16,62 +17,24 @@ const extensions: Record<MetaFormat, string> = {
   "image/png": "png",
   "image/webp": "webp",
 };
+const containerMime: Record<ScanReport["container"], MetaFormat | null> = {
+  jpeg: "image/jpeg",
+  png: "image/png",
+  webp: "image/webp",
+  other: null,
+};
 
-type Scan = { hasExif: boolean; hasGps: boolean; tagCount: number };
-
-/**
- * Lightweight read of a JPEG's APP1 (Exif) segment: confirms whether metadata is
- * present and whether it includes a GPS IFD (tag 0x8825). We only need presence,
- * not the values, so this walks IFD0 far enough to answer that and stops.
- * PNG/WebP report "no readable EXIF"; the re-encode strips everything regardless.
- */
-function inspectJpegExif(buffer: ArrayBuffer): Scan {
-  const none: Scan = { hasExif: false, hasGps: false, tagCount: 0 };
-  const view = new DataView(buffer);
-  if (view.byteLength < 4 || view.getUint16(0) !== 0xffd8) return none; // not JPEG
-  let offset = 2;
-  while (offset + 4 <= view.byteLength) {
-    if (view.getUint8(offset) !== 0xff) break;
-    const marker = view.getUint8(offset + 1);
-    const size = view.getUint16(offset + 2);
-    if (marker === 0xe1) {
-      // APP1 — check for "Exif\0\0"
-      const start = offset + 4;
-      if (
-        start + 6 <= view.byteLength &&
-        view.getUint32(start) === 0x45786966 && // "Exif"
-        view.getUint16(start + 4) === 0x0000
-      ) {
-        const tiff = start + 6;
-        const le = view.getUint16(tiff) === 0x4949; // II = little-endian
-        const u16 = (o: number) => view.getUint16(o, le);
-        const u32 = (o: number) => view.getUint32(o, le);
-        const ifd0 = tiff + u32(tiff + 4);
-        if (ifd0 + 2 > view.byteLength) return { hasExif: true, hasGps: false, tagCount: 0 };
-        const count = u16(ifd0);
-        let hasGps = false;
-        for (let i = 0; i < count; i++) {
-          const entry = ifd0 + 2 + i * 12;
-          if (entry + 2 > view.byteLength) break;
-          if (u16(entry) === 0x8825) hasGps = true; // GPS IFD pointer
-        }
-        return { hasExif: true, hasGps, tagCount: count };
-      }
-    }
-    if (marker === 0xda) break; // start of scan — pixel data begins
-    offset += 2 + size;
-  }
-  return none;
-}
+type Result = { url: string; size: number; lossless: boolean; removed: string[] };
 
 export function MetadataWorkspace() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [scan, setScan] = useState<Scan | null>(null);
+  const [scan, setScan] = useState<ScanReport | null>(null);
+  const [scanning, setScanning] = useState(false);
   const [format, setFormat] = useState<MetaFormat>("image/jpeg");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [result, setResult] = useState<{ url: string; size: number } | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
 
   useEffect(() => () => {
     if (result) URL.revokeObjectURL(result.url);
@@ -82,16 +45,32 @@ export function MetadataWorkspace() {
     setError("");
     setResult(null);
     setFile(next);
-    // Default the output to match the input where we can.
-    if (next.type === "image/png") setFormat("image/png");
-    else if (next.type === "image/webp") setFormat("image/webp");
-    else setFormat("image/jpeg");
+    setScan(null);
+    setScanning(true);
     try {
-      const buf = await next.arrayBuffer();
-      setScan(inspectJpegExif(buf));
+      const report = await scanImageMetadata(next);
+      setScan(report);
+      const mime = containerMime[report.container];
+      if (mime) setFormat(mime);
     } catch {
       setScan(null);
+    } finally {
+      setScanning(false);
     }
+  }
+
+  /**
+   * Lossless strip is possible when the output container matches the input.
+   * Exception: any file carrying a non-default orientation tag (EXIF in JPEG,
+   * eXIf in PNG, EXIF in WebP) must be re-encoded, because dropping the tag
+   * without rotating pixels would flip how the image displays.
+   */
+  function canStripLosslessly(): boolean {
+    if (!scan) return false;
+    const inputMime = containerMime[scan.container];
+    if (!inputMime || inputMime !== format) return false;
+    if (scan.orientation && scan.orientation !== 1) return false;
+    return true;
   }
 
   async function strip() {
@@ -102,8 +81,19 @@ export function MetadataWorkspace() {
     setBusy(true);
     setError("");
     try {
-      // from-image bakes the displayed orientation, so dropping the orientation
-      // tag can't silently rotate the result.
+      if (canStripLosslessly()) {
+        const buffer = await file.arrayBuffer();
+        const { data, removed } = stripMetadataLossless(buffer);
+        const blob = new Blob([data.buffer as ArrayBuffer], { type: format });
+        setResult({
+          url: URL.createObjectURL(blob),
+          size: blob.size,
+          lossless: true,
+          removed,
+        });
+        return;
+      }
+      // Fallback: rebuild from pixels (also bakes the displayed orientation).
       const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
       const canvas = document.createElement("canvas");
       canvas.width = bitmap.width;
@@ -120,13 +110,22 @@ export function MetadataWorkspace() {
         canvas.toBlob(resolve, format, 0.95),
       );
       if (!blob) throw new Error("The clean image could not be encoded.");
-      setResult({ url: URL.createObjectURL(blob), size: blob.size });
+      setResult({
+        url: URL.createObjectURL(blob),
+        size: blob.size,
+        lossless: false,
+        removed: ["EXIF", "XMP", "IPTC", "GPS", "C2PA credentials", "Text data"],
+      });
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Removing metadata failed.");
     } finally {
       setBusy(false);
     }
   }
+
+  const foundSomething = Boolean(
+    scan && (scan.blocks.length || scan.hasGps || scan.aiSignals.length),
+  );
 
   return (
     <section className="media-workspace" aria-label="Metadata remover">
@@ -153,17 +152,35 @@ export function MetadataWorkspace() {
         <div className="control-panel">
           <div className="control-heading">
             <span>Detected</span>
-            <span>Read locally</span>
+            <span>{scanning ? "Reading…" : "Read locally"}</span>
           </div>
           <ul className="meta-readout" style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: "0.5rem" }}>
             <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Icon icon={scan?.hasExif ? "ph:seal-warning" : "ph:seal-check"} width="18" />
-              {scan?.hasExif ? `EXIF metadata present (${scan.tagCount} tags)` : "No readable EXIF block"}
+              <Icon icon={foundSomething ? "ph:seal-warning" : "ph:seal-check"} width="18" />
+              {scan
+                ? foundSomething
+                  ? `Found: ${scan.blocks.join(", ") || "metadata"}`
+                  : "No metadata blocks found"
+                : scanning
+                  ? "Scanning the file…"
+                  : "Pick an image to inspect"}
             </li>
             <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <Icon icon={scan?.hasGps ? "ph:map-pin" : "ph:map-pin-slash"} width="18" />
               {scan?.hasGps ? "GPS location present" : "No GPS location found"}
             </li>
+            {scan?.aiSignals.length ? (
+              <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <Icon icon="ph:robot" width="18" />
+                AI generator fingerprint: {scan.aiSignals.join(", ")}
+              </li>
+            ) : null}
+            {scan?.fields.slice(0, 3).map((field) => (
+              <li key={field.label} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <Icon icon="ph:tag" width="18" />
+                {field.label}: {field.value}
+              </li>
+            ))}
           </ul>
           <label className="field-label">
             Output format
@@ -183,7 +200,9 @@ export function MetadataWorkspace() {
           </button>
           <p className="local-message">
             <Icon icon="ph:shield-check" width="18" />
-            Reading and cleaning both happen in this tab.
+            {canStripLosslessly()
+              ? "Lossless: pixels are copied byte-for-byte."
+              : "Reading and cleaning both happen in this tab."}
           </p>
         </div>
       </div>
@@ -198,7 +217,11 @@ export function MetadataWorkspace() {
           <div>
             <span>Clean copy ready</span>
             <strong>{formatBytes(result.size)}</strong>
-            <small>EXIF, GPS, and thumbnails dropped</small>
+            <small>
+              {result.lossless
+                ? `Dropped: ${result.removed.join(", ") || "metadata"} — pixels untouched`
+                : "Rebuilt from pixels — all embedded data dropped"}
+            </small>
           </div>
           <a
             className="download-action"

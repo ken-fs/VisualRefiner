@@ -9,10 +9,11 @@
     "dev": "next dev",
     "build": "next build && node scripts/inject-design-contract.mjs",
     "lint": "eslint",
-    "test": "tsx tests/tools.test.ts"
+    "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
+    "exifr": "^7.1.3",
     "gifenc": "^1.0.3",
     "heic2any": "^0.0.4",
     "mediabunny": "^1.53.0",
@@ -22,6 +23,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@techstark/opencv-js": "5.0.0-release.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

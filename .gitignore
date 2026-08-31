@@ -11,3 +11,7 @@ out/
 
 # TypeScript incremental build info
 tsconfig.tsbuildinfo
+
+# 私有运营文件（不提交）
+/outreach-progress.md
+/article-metadata-blogger.html

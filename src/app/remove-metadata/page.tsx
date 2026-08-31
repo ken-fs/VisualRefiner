@@ -34,16 +34,19 @@ export default function RemoveMetadataPage() {
           </p>
           <h3>How the removal works</h3>
           <p>
-            The image is drawn to a canvas and re-encoded, so the new file is rebuilt from pixels alone — none of
-            the original EXIF, GPS, or embedded thumbnail comes across. The picture looks identical. One note: the
-            orientation tag is metadata too, so the clean copy is baked to the orientation you see on screen.
+            When the clean copy keeps the original format, the tool rebuilds the file container and drops the
+            metadata segments — EXIF, XMP, IPTC, C2PA manifests — while copying the pixels byte-for-byte, so there
+            is zero quality loss. If a photo relies on its orientation tag, it is re-encoded instead so the clean
+            copy stays upright. Either way, nothing embedded comes across. The scanner also flags AI-generator
+            fingerprints (a software tag, a leftover prompt) and C2PA credentials when they&apos;re present — see{" "}
+            <Link href="/check-image-origin">check image origin</Link> for the full readout.
           </p>
         </>
       }
       faqs={[
         { question: "What metadata does this remove?", answer: "All of it. Re-encoding the image through the canvas rebuilds the file from pixels only, so EXIF (date, camera, settings), GPS location, and any embedded thumbnail are dropped from the output." },
-        { question: "How does it know if my photo has GPS data?", answer: "It reads the JPEG's Exif segment in your browser and checks for a GPS tag, reporting whether one is present. The check is local — the file is never uploaded to detect anything." },
-        { question: "Will the photo look different afterwards?", answer: "No. Metadata is separate from the pixels, so re-encoding at high quality keeps the image visually the same. The only change is that the orientation tag is applied and then removed, so the file is upright on its own." },
+        { question: "How does it know if my photo has GPS data?", answer: "It parses the embedded EXIF fields in your browser and checks for GPS coordinates, reporting whether they are present. The check is local — the file is never uploaded to detect anything." },
+        { question: "Will the photo look different afterwards?", answer: "No. When the output keeps the original format, the pixel data is copied untouched — not even re-compressed. The one exception: a photo that relies on its orientation tag is re-encoded so the clean copy stays upright, still at high quality." },
         { question: "Do PNG and WebP have EXIF too?", answer: "They can carry some metadata, though GPS-tagged EXIF is most common on JPEG camera photos. Whatever the format, re-encoding here strips the embedded data either way." },
         { question: "Is the image uploaded to clean it?", answer: "No. Both reading the metadata and writing the clean copy happen entirely in your browser tab, so the photo never leaves your device." },
       ]}

@@ -49,6 +49,20 @@ export const guides: GuideMeta[] = [
     hook: "Two modern formats, one practical choice.",
     datePublished: "2026-08-22",
   },
+  {
+    slug: "/guides/video-metadata",
+    title: "What metadata does a video file carry?",
+    description: "The hidden fields inside MP4, MOV, MKV, and WebM files — device info, editing history, AIGC labels — and how to strip them without re-encoding.",
+    hook: "Your videos have a paper trail too.",
+    datePublished: "2026-08-31",
+  },
+  {
+    slug: "/guides/what-is-c2pa",
+    title: "What is C2PA? Content Credentials explained",
+    description: "How the C2PA standard embeds a signed origin record into images and video, what it can tell you about AI-generated content, and what it can't prove.",
+    hook: "The nutrition label for digital content.",
+    datePublished: "2026-08-31",
+  },
 ];
 
 // Maps a tool slug to the guides worth reading alongside it. Used to build the
@@ -75,7 +89,10 @@ const toolGuideMap: Record<string, string[]> = {
   "/mp4-to-webm": ["/guides/mp4-vs-webm"],
   "/mov-to-webm": ["/guides/mp4-vs-webm"],
   "/mkv-to-webm": ["/guides/mp4-vs-webm"],
-  "/remove-metadata": ["/guides/remove-image-metadata"],
+  "/remove-metadata": ["/guides/remove-image-metadata", "/guides/what-is-c2pa"],
+  "/remove-video-metadata": ["/guides/video-metadata"],
+  "/check-image-origin": ["/guides/what-is-c2pa", "/guides/remove-image-metadata"],
+  "/erase-object": ["/guides/remove-image-metadata"],
   "/image-cropper": ["/guides/image-compression-quality"],
   "/trim-video": ["/guides/mp4-vs-webm"],
 };
