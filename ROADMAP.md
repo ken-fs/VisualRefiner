@@ -14,6 +14,28 @@ they flow into the home tool index, sitemap, and internal links automatically.
 - Reverse video landing pages: `/mp4-to-webm`, `/mov-to-webm`, `/mkv-to-webm`
 - Guides: `/guides/remove-image-metadata`, `/guides/avif-vs-webp`
 
+## Shipped (2026-08-31)
+
+- `/remove-video-metadata` — lossless container metadata strip, streams copied
+  untouched (mediabunny remux); covers TC260 AIGC tags by construction
+- `/check-image-origin` — C2PA Content Credentials reader (own JUMBF + CBOR
+  parser, no deps) + AI-generator fingerprint report
+- `/erase-object` — paint-mask inpainting (OpenCV.js Telea, WASM on demand);
+  positioned as object/blemish remover, own-images-only copy
+- `/remove-metadata` upgrade — lossless byte-level strip for JPEG/PNG/WebP
+  (pixels untouched, ICC/APNG/HDR chunks kept), exifr full-field read,
+  AI fingerprint detection; canvas re-encode only when orientation requires it
+- Guides: `/guides/video-metadata`, `/guides/what-is-c2pa`
+- Full plan + adversarial-review record: `docs/plans/2026-08-31-ai-watermark-features-plan.md`
+
+### Follow-ups from 2026-08-31 ship
+- Manual QA (can't be automated): erase-object feel; real Gemini/DALL·E image
+  through origin checker; real Doubao/Jimeng MP4 through video metadata remover.
+- Open decision: add "Erase an object" to the home hero quick-index or not.
+- Deferred research (see plan doc checklist): P5 in-browser VAE-regeneration
+  experiment for invisible watermarks; P6 server-side AI tier incl. evaluating
+  raiw.cc API vs self-hosted GPU.
+
 ## Backlog — not yet built
 
 ### 1. Batch image conversion + ZIP download — value: high, effort: M

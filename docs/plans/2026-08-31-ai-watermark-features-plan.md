@@ -150,6 +150,17 @@ SynthID 无公开本地检测器，但开放水印方案（DWT-DCT、TrustMark�
 P3 抢 SEO 选题；P4 是对方项目最核心的可见能力，但需谨慎文案；
 隐藏水印在服务器分层落地前不做承诺。
 
+## 遗留事项（2026-08-31 交付时记录）
+
+**人工验收（机器无法代劳，上线后尽快做）**
+- [ ] `/erase-object` 实际涂抹手感与填充效果验收（复杂背景是否涂抹可接受）
+- [ ] 真实 Gemini / DALL·E 图片过 `/check-image-origin`，确认 C2PA 字段展示正确
+- [ ] 真实豆包/即梦导出 MP4 过 `/remove-video-metadata`，确认 AIGC 标签消失且可播放
+
+**待决策（不阻塞）**
+- [ ] 是否在首页 hero 区 `hero-task-index` 加 "Erase an object" 快捷入口（当前只有
+  Compress / Resize / Convert video 三个老工具；不加则与全站导航逻辑一致）
+
 ## 待调研清单（P5/P6 启动前回答）
 
 - [ ] P5：SD1.5/SDXL VAE 的 ONNX 导出体积与量化后画质；WebGPU 下 tiling 大图
