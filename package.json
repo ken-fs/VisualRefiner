@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && node scripts/inject-design-contract.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts"
   },
