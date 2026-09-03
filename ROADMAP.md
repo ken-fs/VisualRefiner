@@ -41,6 +41,9 @@ they flow into the home tool index, sitemap, and internal links automatically.
 - IndexNow integration — key file at site root, `pnpm indexnow` submits the whole
   sitemap or specific URLs (scripts/indexnow.mjs); all 41 URLs submitted
 - Guide: `/guides/remove-metadata-iphone-photos` (iPhone metadata cluster expansion)
+- Guides: `/guides/remove-gps-location-from-photos`, `/guides/what-is-exif-data`,
+  `/guides/how-to-tell-if-an-image-is-ai-generated` (metadata cluster + AI-provenance
+  content; all pushed via IndexNow)
 
 ## Backlog — not yet built
 
