@@ -36,6 +36,12 @@ they flow into the home tool index, sitemap, and internal links automatically.
   experiment for invisible watermarks; P6 server-side AI tier incl. evaluating
   raiw.cc API vs self-hosted GPU.
 
+## Shipped (2026-09-03)
+
+- IndexNow integration — key file at site root, `pnpm indexnow` submits the whole
+  sitemap or specific URLs (scripts/indexnow.mjs); all 41 URLs submitted
+- Guide: `/guides/remove-metadata-iphone-photos` (iPhone metadata cluster expansion)
+
 ## Backlog — not yet built
 
 ### 1. Batch image conversion + ZIP download — value: high, effort: M
