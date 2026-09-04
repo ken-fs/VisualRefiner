@@ -89,6 +89,41 @@ Output a copy-paste data URI for small images.
 - Needs: `FileReader`/Canvas only. New page `/image-to-base64`. Warn about size
   bloat for large images.
 
+### 7. AVIF conversion cluster — value: high, effort: M ✅ approved 2026-09-04
+AVIF encode + decode plus the usual format-pair pages: `/avif-to-jpg`,
+`/avif-to-png`, `/avif-to-webp`, `/png-to-avif`, `/jpg-to-avif`, `/webp-to-avif`;
+AVIF added to the generic converter/compressor output options.
+- Needs: `@jsquash/avif` (Apache-2.0, Squoosh WASM codecs; GitHub 718★ for
+  jamsinclair/jSquash). canvas.toBlob AVIF is Chrome-only, WASM covers all
+  browsers — that's the selling point vs other converter sites. Lazy-load the
+  WASM like the opencv pattern; self-host the .wasm asset.
+- Why: `/guides/avif-vs-webp` already exists but has no tool to link to —
+  closes the guide→tool gap; AVIF search demand keeps growing.
+- Bonus (same dep family, do while in there): `@jsquash/jpeg` (mozjpeg) and
+  `@jsquash/oxipng` can upgrade the image compressor's output quality.
+- Register all pages in `src/lib/conversions.ts` so sitemap/nav flow.
+
+### 8. Image to text (OCR) — value: high, effort: M ✅ approved 2026-09-04
+New page `/image-to-text`: drop an image (or screenshot/scan), extract the text,
+copy/download as .txt. Language selector (eng default, top ~10 languages).
+- Needs: `tesseract.js` (Apache-2.0, 38.6k★, 100+ languages, browser WASM).
+  Worker + language data load lazily from CDN or self-host `tessdata`;
+  show progress state (first load pulls a multi-MB language pack).
+- Why: "image to text" is one of the biggest tool keywords; privacy angle is
+  strong (IDs, documents, screenshots OCR'd without upload). First tool outside
+  the convert/compress category — new keyword surface.
+- Companion guide later: `/guides/extract-text-from-image`.
+
+## Research notes (2026-09-04, GitHub scan)
+
+- **Background remover** — highest demand of any candidate, but blocked on
+  licensing: imgly/background-removal-js is AGPL-3.0 (needs commercial license
+  for an ad-monetized closed-source site); BRIA RMBG models are non-commercial.
+  Revisit only if we buy a license or a clean MIT/Apache model appears.
+- **Image upscaler** (`/image-upscaler`) — feasible via UpscalerJS (MIT, 897★,
+  TF.js, 2x/4x in-browser). Not approved yet; pairs with erase-object as an
+  "AI edit" cluster if picked up.
+
 ## Future direction — accounts + AI features (needs product decision + backend)
 
 Goal (recorded 2026-08-22): add **registration / login** to gate **AI-powered
