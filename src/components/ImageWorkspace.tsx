@@ -6,7 +6,7 @@ import { Select } from "@/components/Select";
 import { formatBytes, outputName } from "@/lib/tools";
 
 type ImageMode = "convert" | "compress" | "resize";
-type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
+type ImageFormat = "image/jpeg" | "image/png" | "image/webp" | "image/avif";
 
 type ImageWorkspaceProps = {
   mode: ImageMode;
@@ -19,19 +19,21 @@ const formatLabels: Record<ImageFormat, string> = {
   "image/jpeg": "JPG",
   "image/png": "PNG",
   "image/webp": "WebP",
+  "image/avif": "AVIF",
 };
 
 const extensions: Record<ImageFormat, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
+  "image/avif": "avif",
 };
 
 export function ImageWorkspace({
   mode,
   compact = false,
   defaultFormat = "image/webp",
-  accept = "image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif",
+  accept = "image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif,.avif,.heic,.heif",
 }: ImageWorkspaceProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -67,13 +69,13 @@ export function ImageWorkspace({
     try {
       const blob = await normalizeInput(nextFile, quality / 100);
       setInputUrl(URL.createObjectURL(blob));
-      const bitmap = await createImageBitmap(blob);
+      const bitmap = await openBitmap(blob, nextFile);
       setWidth(bitmap.width);
       setHeight(bitmap.height);
       setAspectRatio(bitmap.width / bitmap.height);
       bitmap.close();
     } catch {
-      setError("This image cannot be decoded here. Try JPG, PNG, WebP, or HEIC.");
+      setError("This image cannot be decoded here. Try JPG, PNG, WebP, AVIF, or HEIC.");
     }
   }
 
@@ -105,7 +107,7 @@ export function ImageWorkspace({
 
     try {
       const normalized = await normalizeInput(file, quality / 100);
-      const bitmap = await createImageBitmap(normalized);
+      const bitmap = await openBitmap(normalized, file);
       const source = document.createElement("canvas");
       source.width = bitmap.width;
       source.height = bitmap.height;
@@ -124,7 +126,7 @@ export function ImageWorkspace({
 
       bitmap.close();
       const mime = mode === "compress" && format === "image/png" ? "image/webp" : format;
-      const blob = await canvasBlob(target, mime, quality / 100);
+      const blob = await encodeCanvas(target, mime, quality / 100);
 
       if (resultUrl) URL.revokeObjectURL(resultUrl);
       setResultBlob(blob);
@@ -276,4 +278,28 @@ function canvasBlob(canvas: HTMLCanvasElement, type: ImageFormat, quality: numbe
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("Canvas export failed.")), type, quality);
   });
+}
+
+/** Decodes a source image; falls back to the WASM AVIF decoder when the
+ *  browser can't (mainly older Safari). */
+async function openBitmap(blob: Blob, file: File): Promise<ImageBitmap> {
+  try {
+    return await createImageBitmap(blob);
+  } catch (reason) {
+    const { isAvifFile } = await import("@/lib/avif");
+    if (!isAvifFile(file) && blob.type !== "image/avif") throw reason;
+    const { decodeAvif } = await import("@/lib/avif");
+    const data = await decodeAvif(await blob.arrayBuffer());
+    return createImageBitmap(data);
+  }
+}
+
+/** AVIF always goes through the WASM encoder — canvas.toBlob only supports
+ *  it in Chromium and silently returns PNG elsewhere. */
+async function encodeCanvas(canvas: HTMLCanvasElement, type: ImageFormat, quality: number): Promise<Blob> {
+  if (type !== "image/avif") return canvasBlob(canvas, type, quality);
+  const pixels = canvas.getContext("2d")?.getImageData(0, 0, canvas.width, canvas.height);
+  if (!pixels) throw new Error("Could not read the processed image.");
+  const { encodeAvif } = await import("@/lib/avif");
+  return encodeAvif(pixels, quality * 100);
 }

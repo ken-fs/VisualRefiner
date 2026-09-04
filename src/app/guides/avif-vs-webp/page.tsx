@@ -71,10 +71,11 @@ export default function AvifVsWebpGuide() {
 
       <h2>Convert locally</h2>
       <p>
-        VisualRefiner converts between JPG, PNG, and WebP right in your browser — no upload. For the best mix of small
-        size and support today, run your images through the{" "}
-        <Link href="/image-converter">image converter</Link> and target WebP, or shrink an existing photo with the{" "}
-        <Link href="/image-compressor">image compressor</Link>.
+        VisualRefiner converts between JPG, PNG, WebP, and AVIF right in your browser — no upload. Try{" "}
+        <Link href="/png-to-avif">PNG to AVIF</Link> or <Link href="/jpg-to-avif">JPG to AVIF</Link> to shrink images
+        for the modern web, or <Link href="/avif-to-webp">AVIF to WebP</Link> when you need wider software support.
+        The <Link href="/image-converter">image converter</Link> handles every combination, and the{" "}
+        <Link href="/image-compressor">image compressor</Link> shrinks an existing photo further.
       </p>
     </GuideShell>
   );

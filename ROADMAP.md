@@ -45,6 +45,17 @@ they flow into the home tool index, sitemap, and internal links automatically.
   `/guides/how-to-tell-if-an-image-is-ai-generated` (metadata cluster + AI-provenance
   content; all pushed via IndexNow)
 
+## Shipped (2026-09-04)
+
+- **AVIF conversion cluster** — `/avif-to-jpg`, `/avif-to-png`, `/avif-to-webp`,
+  `/png-to-avif`, `/jpg-to-avif`, `/webp-to-avif`; AVIF added to the shared
+  ImageWorkspace (convert/compress/resize) for both input and output. Codec:
+  @jsquash/avif (libavif WASM) served from `public/vendor/avif/` and imported
+  at runtime (`webpackIgnore`) — same delivery pattern as the OpenCV eraser;
+  bundling it stalls Turbopack. Encoder always uses WASM (canvas.toBlob only
+  does AVIF in Chromium); decoder is a fallback for older Safari. E2E-verified
+  in Node (encode+decode round-trip). `guides/avif-vs-webp` now links the tools.
+
 ## Backlog — not yet built
 
 ### 1. Batch image conversion + ZIP download — value: high, effort: M
@@ -89,19 +100,10 @@ Output a copy-paste data URI for small images.
 - Needs: `FileReader`/Canvas only. New page `/image-to-base64`. Warn about size
   bloat for large images.
 
-### 7. AVIF conversion cluster — value: high, effort: M ✅ approved 2026-09-04
-AVIF encode + decode plus the usual format-pair pages: `/avif-to-jpg`,
-`/avif-to-png`, `/avif-to-webp`, `/png-to-avif`, `/jpg-to-avif`, `/webp-to-avif`;
-AVIF added to the generic converter/compressor output options.
-- Needs: `@jsquash/avif` (Apache-2.0, Squoosh WASM codecs; GitHub 718★ for
-  jamsinclair/jSquash). canvas.toBlob AVIF is Chrome-only, WASM covers all
-  browsers — that's the selling point vs other converter sites. Lazy-load the
-  WASM like the opencv pattern; self-host the .wasm asset.
-- Why: `/guides/avif-vs-webp` already exists but has no tool to link to —
-  closes the guide→tool gap; AVIF search demand keeps growing.
-- Bonus (same dep family, do while in there): `@jsquash/jpeg` (mozjpeg) and
-  `@jsquash/oxipng` can upgrade the image compressor's output quality.
-- Register all pages in `src/lib/conversions.ts` so sitemap/nav flow.
+### 7. mozjpeg / oxipng compressor upgrade — value: medium, effort: M
+Upgrade the image compressor's output quality with Squoosh's WASM codecs.
+- Needs: `@jsquash/jpeg` (mozjpeg) and `@jsquash/oxipng` — same vendor-asset
+  delivery pattern now proven by the AVIF cluster (2026-09-04).
 
 ### 8. Image to text (OCR) — value: high, effort: M ✅ approved 2026-09-04
 New page `/image-to-text`: drop an image (or screenshot/scan), extract the text,

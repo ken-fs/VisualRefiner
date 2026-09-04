@@ -16,7 +16,7 @@ export const tools: ToolDefinition[] = [
     name: "Image converter",
     shortName: "Convert",
     description: "Switch between JPG, PNG, and WebP.",
-    formats: "JPG · PNG · WebP · HEIC",
+    formats: "JPG · PNG · WebP · AVIF · HEIC",
     group: "image",
     available: true,
   },

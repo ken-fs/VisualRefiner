@@ -24,6 +24,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@jsquash/avif": "^2.1.1",
     "@techstark/opencv-js": "5.0.0-release.1",
     "@types/node": "^20",
     "@types/react": "^19",
