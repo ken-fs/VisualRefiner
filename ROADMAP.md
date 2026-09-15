@@ -75,7 +75,7 @@ Generate a multi-size `.ico` (16/32/48) plus PNG touch icons from one image.
   and a combined `.ico`.
 - New page: `/favicon-generator`. High search intent.
 
-### 3. Video compressor — value: high, effort: M
+### 3. Video compressor — value: high, effort: M ✅ shipped 2026-09-15 (`/compress-video`, VideoCompressor.tsx; resolution height + quality via mediabunny, MP4 out)
 Reduce a video's size by lowering resolution and/or bitrate.
 - Needs: mediabunny (already installed). Expose target resolution + a
   quality/bitrate control in a new `VideoCompressor` component; reuse the
