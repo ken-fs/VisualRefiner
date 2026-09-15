@@ -48,6 +48,13 @@ export default function AvifToPngPage() {
             <Link href="/guides/webp-vs-png">WebP vs PNG</Link> and{" "}
             <Link href="/guides/avif-vs-webp">AVIF vs WebP</Link>.
           </p>
+          <h3>Expect a bigger file</h3>
+          <p>
+            AVIF is one of the densest image formats in use; PNG is deliberately uncompressed by comparison. The
+            converted PNG holds a pixel-exact decode of your AVIF, so it is typically 3–10× larger — that size jump
+            is the price of universal compatibility and lossless editing, not a bug. If you need small{" "}
+            <em>and</em> widely supported, <Link href="/avif-to-webp">AVIF to WebP</Link> lands in the middle.
+          </p>
         </>
       }
       faqs={[

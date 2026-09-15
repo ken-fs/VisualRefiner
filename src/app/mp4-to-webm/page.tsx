@@ -40,6 +40,14 @@ export default function Mp4ToWebmPage() {
             works can differ between browsers. See the{" "}
             <Link href="/guides/mp4-vs-webm">MP4 vs WebM guide</Link> for which to pick.
           </p>
+          <h3>When WebM is actually the right target</h3>
+          <p>
+            WebM with VP9 usually beats MP4 on size for clips you host yourself — background loops, product demos,
+            autoplay heroes. Every modern browser plays it inline. Where it loses is the rest of the world: chat
+            apps, TVs, and older editors often reject it. And if the goal is just a smaller file for sharing, keep
+            MP4 and use the <Link href="/compress-video">video compressor</Link> instead — same compatibility,
+            less drama.
+          </p>
         </>
       }
       faqs={[

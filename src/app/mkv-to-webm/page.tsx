@@ -30,6 +30,15 @@ export default function MkvToWebmPage() {
             editing instead, target MP4 with the <Link href="/mkv-to-mp4">MKV to MP4</Link> tool. See the{" "}
             <Link href="/guides/mp4-vs-webm">MP4 vs WebM guide</Link> for the difference.
           </p>
+          <h3>What happens to the tracks inside</h3>
+          <p>
+            An MKV can carry almost anything — H.264, H.265, or AV1 video, AAC, AC3, or DTS audio, plus subtitle
+            tracks. WebM is far stricter: it only accepts VP8, VP9, or AV1 video and Vorbis or Opus audio. Anything
+            else has to be re-encoded to fit, which is why conversion takes a moment even for a short clip. The
+            usual failure point is the audio — movie rips with AC3 or DTS sound may not re-encode in every browser,
+            and subtitle tracks do not carry over. If a file refuses to convert, try{" "}
+            <Link href="/mkv-to-mp4">MKV to MP4</Link> first and share that instead.
+          </p>
         </>
       }
       faqs={[

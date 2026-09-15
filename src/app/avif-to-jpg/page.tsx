@@ -48,6 +48,13 @@ export default function AvifToJpgPage() {
             trade-off, and <Link href="/guides/avif-vs-webp">AVIF vs WebP</Link> explains where AVIF
             sits among the modern formats.
           </p>
+          <h3>Two things to know before converting</h3>
+          <p>
+            JPG has no transparency channel, so any transparent areas in the AVIF are flattened when saved — check
+            logos and cut-outs before sending. And because JPG predates modern formats by decades, the file will be
+            larger than the AVIF at similar quality. Compatibility is the point: the result opens in literally every
+            editor, viewer, printer pipeline, and upload form still in service.
+          </p>
         </>
       }
       faqs={[

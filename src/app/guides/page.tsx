@@ -30,6 +30,19 @@ export default function GuidesPage() {
         Format names are confusing and the right choice depends on what you need. These short guides explain the
         common decisions in plain language, and each one links to the tool that does the job.
       </p>
+      <p>
+        The collection splits into three practical clusters. <strong>Format decisions</strong> —{" "}
+        <Link href="/guides/webp-vs-png">WebP vs PNG</Link>, <Link href="/guides/avif-vs-webp">AVIF vs WebP</Link>,{" "}
+        <Link href="/guides/mp4-vs-webm">MP4 vs WebM</Link> — answer "which one do I actually need" for the formats
+        that come up most. <strong>Privacy and metadata</strong> —{" "}
+        <Link href="/guides/remove-gps-location-from-photos">removing GPS data</Link>,{" "}
+        <Link href="/guides/what-is-exif-data">what EXIF even is</Link>,{" "}
+        <Link href="/guides/how-to-tell-if-an-image-is-ai-generated">spotting AI-generated images</Link> — cover what
+        hides inside a file and how to strip it before sharing. And <strong>quality trade-offs</strong>, led by the{" "}
+        <Link href="/guides/image-compression-quality">compression quality guide</Link>, explain what you lose and
+        keep when a file gets smaller. Every guide is written to be read in a few minutes and ends at the tool that
+        applies it.
+      </p>
       <ul className="guide-list">
         {guides.map((guide) => (
           <li key={guide.slug}>

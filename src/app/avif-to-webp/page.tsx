@@ -49,6 +49,14 @@ export default function AvifToWebpPage() {
             Need pixels you can edit instead? <Link href="/avif-to-png">AVIF to PNG</Link> is the
             lossless route.
           </p>
+          <h3>Why WebP over AVIF for sharing</h3>
+          <p>
+            AVIF wins on raw compression, but WebP reads almost everywhere AVIF does in browsers{" "}
+            <em>plus</em> far more desktop software — editors, CMS upload fields, and older apps that still reject
+            AVIF outright. Converting between two lossy formats means the WebP stores the AVIF&apos;s decoded pixels,
+            so start from the cleanest source you have rather than converting a file that has already been
+            round-tripped.
+          </p>
         </>
       }
       faqs={[

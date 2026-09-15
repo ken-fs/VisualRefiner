@@ -47,6 +47,14 @@ export default function JpgToAvifPage() {
             keep the JPG or use <Link href="/jpg-to-webp">JPG to WebP</Link> as the middle ground.
             Background on the trade-offs: <Link href="/guides/avif-vs-webp">AVIF vs WebP</Link>.
           </p>
+          <h3>Converting can&apos;t add detail back</h3>
+          <p>
+            The AVIF stores the JPG&apos;s decoded pixels — artifacts the JPG already introduced (blockiness around
+            text, smeared gradients) carry over. What you gain is density: the same visible image in a file often
+            half the size, which matters for pages you host. Start from the highest-quality JPG available, and if
+            the image is a screenshot or logo with sharp edges, <Link href="/jpg-to-png">JPG to PNG</Link> usually
+            looks better than any lossy target.
+          </p>
         </>
       }
       faqs={[

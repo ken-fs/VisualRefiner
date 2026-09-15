@@ -48,6 +48,14 @@ export default function WebpToAvifPage() {
             chains, convert from the highest-quality source you have. Need a universally editable
             file instead? <Link href="/webp-to-png">WebP to PNG</Link> is the lossless route.
           </p>
+          <h3>What AVIF buys you</h3>
+          <p>
+            AVIF is a generation newer than WebP: at the same visual quality it typically saves another 20–30%,
+            and it keeps transparency. The trade-offs are slower encoding (noticeable on large images) and thinner
+            editor support — every current browser displays AVIF, but older desktop software may not. AVIF makes
+            most sense for images you host on your own site; for files headed into other people&apos;s software,
+            WebP or PNG is safer.
+          </p>
         </>
       }
       faqs={[

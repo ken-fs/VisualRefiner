@@ -32,6 +32,14 @@ export default function MovToWebmPage() {
             <Link href="/mov-to-mp4">MOV to MP4</Link> tool. The{" "}
             <Link href="/guides/mp4-vs-webm">MP4 vs WebM guide</Link> lays out the trade-off.
           </p>
+          <h3>iPhone MOVs, specifically</h3>
+          <p>
+            A MOV straight off an iPhone is usually H.264 or HEVC (H.265), sometimes with HDR Dolby Vision metadata.
+            Re-encoding to WebM flattens that to standard dynamic range VP9 — fine for web use, but the HDR pop is
+            gone. If your goal is a smaller file rather than a specific format, the{" "}
+            <Link href="/compress-video">video compressor</Link> keeps the MP4 container and just shrinks it, which
+            is usually the better answer for phone footage.
+          </p>
         </>
       }
       faqs={[
