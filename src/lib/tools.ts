@@ -111,6 +111,15 @@ export const tools: ToolDefinition[] = [
     available: true,
   },
   {
+    slug: "/compress-video",
+    name: "Video compressor",
+    shortName: "Compress video",
+    description: "Shrink a video by lowering resolution and quality.",
+    formats: "MP4 · MOV · WebM · MKV → MP4",
+    group: "video",
+    available: true,
+  },
+  {
     slug: "/remove-video-metadata",
     name: "Video metadata remover",
     shortName: "Clean video",
