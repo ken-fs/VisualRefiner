@@ -44,12 +44,16 @@ Each tool is a focused page that does one real task:
 - **[Video to GIF](https://visualrefiner.com/video-to-gif)** — turn a short clip into a looping GIF
 - Format-specific converters: MOV→MP4, MKV→MP4, WebM→MP4
 
+### Audio
+- **[Audio transcriber](https://visualrefiner.com/audio-to-text)** — turn speech in audio or video into text with on-device Whisper, then copy it or export TXT, SRT, or VTT
+
 ### Guides
 Plain-language explainers that link to the matching tool:
 - [WebP vs PNG](https://visualrefiner.com/guides/webp-vs-png)
 - [What is HEIC, and how do you open it?](https://visualrefiner.com/guides/heic-explained)
 - [What compression quality should you use?](https://visualrefiner.com/guides/image-compression-quality)
 - [MP4 vs WebM](https://visualrefiner.com/guides/mp4-vs-webm)
+- [How to transcribe audio to text without uploading it](https://visualrefiner.com/guides/transcribe-audio-to-text)
 
 ## Tech stack
 

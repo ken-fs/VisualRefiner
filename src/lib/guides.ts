@@ -91,11 +91,19 @@ export const guides: GuideMeta[] = [
     hook: "The nutrition label for digital content.",
     datePublished: "2026-08-31",
   },
+  {
+    slug: "/guides/transcribe-audio-to-text",
+    title: "How to transcribe audio to text without uploading it",
+    description: "How on-device Whisper transcription works, what accuracy to expect, and how to choose between TXT, SRT, and VTT output.",
+    hook: "Speech to text, minus the server.",
+    datePublished: "2026-09-16",
+  },
 ];
 
 // Maps a tool slug to the guides worth reading alongside it. Used to build the
 // "Related guides" block on tool pages so every tool links into the topic cluster.
 const toolGuideMap: Record<string, string[]> = {
+  "/audio-to-text": ["/guides/transcribe-audio-to-text"],
   "/image-converter": ["/guides/webp-vs-png"],
   "/image-compressor": ["/guides/image-compression-quality", "/guides/webp-vs-png"],
   "/image-resizer": ["/guides/image-compression-quality"],
