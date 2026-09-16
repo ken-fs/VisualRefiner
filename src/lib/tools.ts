@@ -1,4 +1,4 @@
-export type ToolGroup = "image" | "video";
+export type ToolGroup = "image" | "video" | "audio";
 
 export type ToolDefinition = {
   slug: string;
@@ -126,6 +126,15 @@ export const tools: ToolDefinition[] = [
     description: "Strip hidden metadata from a video without re-encoding.",
     formats: "MP4 · MOV · MKV · WebM",
     group: "video",
+    available: true,
+  },
+  {
+    slug: "/audio-to-text",
+    name: "Audio transcriber",
+    shortName: "Transcribe",
+    description: "Turn speech in audio or video into text you can copy or subtitle.",
+    formats: "MP3 · WAV · M4A · MP4 · MOV · MKV → TXT · SRT · VTT",
+    group: "audio",
     available: true,
   },
 ];

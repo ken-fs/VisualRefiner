@@ -33,7 +33,7 @@ export default function GuidesPage() {
       <p>
         The collection splits into three practical clusters. <strong>Format decisions</strong> —{" "}
         <Link href="/guides/webp-vs-png">WebP vs PNG</Link>, <Link href="/guides/avif-vs-webp">AVIF vs WebP</Link>,{" "}
-        <Link href="/guides/mp4-vs-webm">MP4 vs WebM</Link> — answer "which one do I actually need" for the formats
+        <Link href="/guides/mp4-vs-webm">MP4 vs WebM</Link> — answer &ldquo;which one do I actually need&rdquo; for the formats
         that come up most. <strong>Privacy and metadata</strong> —{" "}
         <Link href="/guides/remove-gps-location-from-photos">removing GPS data</Link>,{" "}
         <Link href="/guides/what-is-exif-data">what EXIF even is</Link>,{" "}
