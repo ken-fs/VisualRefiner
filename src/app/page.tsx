@@ -85,6 +85,14 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
+          <div>
+            <h3>Speech to text</h3>
+            <ul>
+              {conversions.filter((c) => c.group === "audio").map((c) => (
+                <li key={c.slug}><Link href={c.slug}>{c.label}<Icon icon="ph:arrow-up-right" width="15" aria-hidden="true" /></Link></li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
     </main>

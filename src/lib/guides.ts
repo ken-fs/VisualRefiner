@@ -104,6 +104,11 @@ export const guides: GuideMeta[] = [
 // "Related guides" block on tool pages so every tool links into the topic cluster.
 const toolGuideMap: Record<string, string[]> = {
   "/audio-to-text": ["/guides/transcribe-audio-to-text"],
+  "/mp4-to-text": ["/guides/transcribe-audio-to-text"],
+  "/mp3-to-text": ["/guides/transcribe-audio-to-text"],
+  "/wav-to-text": ["/guides/transcribe-audio-to-text"],
+  "/m4a-to-text": ["/guides/transcribe-audio-to-text"],
+  "/video-to-srt": ["/guides/transcribe-audio-to-text"],
   "/image-converter": ["/guides/webp-vs-png"],
   "/image-compressor": ["/guides/image-compression-quality", "/guides/webp-vs-png"],
   "/image-resizer": ["/guides/image-compression-quality"],

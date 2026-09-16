@@ -1,7 +1,7 @@
 export type Conversion = {
   slug: string;
   label: string;
-  group: "image" | "video";
+  group: "image" | "video" | "audio";
 };
 
 // Format-specific converter landing pages. Each reuses the shared processing
@@ -28,4 +28,9 @@ export const conversions: Conversion[] = [
   { slug: "/mp4-to-webm", label: "MP4 to WebM", group: "video" },
   { slug: "/mov-to-webm", label: "MOV to WebM", group: "video" },
   { slug: "/mkv-to-webm", label: "MKV to WebM", group: "video" },
+  { slug: "/mp4-to-text", label: "MP4 to Text", group: "audio" },
+  { slug: "/mp3-to-text", label: "MP3 to Text", group: "audio" },
+  { slug: "/wav-to-text", label: "WAV to Text", group: "audio" },
+  { slug: "/m4a-to-text", label: "M4A to Text", group: "audio" },
+  { slug: "/video-to-srt", label: "Video to SRT", group: "audio" },
 ];

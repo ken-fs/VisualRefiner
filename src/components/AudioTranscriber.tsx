@@ -43,7 +43,7 @@ const LANGUAGES = [
   { value: "hi", label: "हिन्दी (Hindi)" },
 ];
 
-export function AudioTranscriber() {
+export function AudioTranscriber({ initialFormat = "txt" }: { initialFormat?: TranscriptFormat }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const cancelRef = useRef(false);
@@ -57,7 +57,7 @@ export function AudioTranscriber() {
   const [audioDuration, setAudioDuration] = useState(0);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
-  const [format, setFormat] = useState<TranscriptFormat>("txt");
+  const [format, setFormat] = useState<TranscriptFormat>(initialFormat);
   const [copied, setCopied] = useState(false);
   const [recording, setRecording] = useState(false);
 
