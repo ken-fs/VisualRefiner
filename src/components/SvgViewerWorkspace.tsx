@@ -125,7 +125,7 @@ export function SvgViewerWorkspace() {
             <span>Never uploaded</span>
           </div>
 
-          <div className="dimension-fields">
+          <div style={{ display: "grid", gap: "0.4rem" }}>
             <button className="file-select-button" type="button" onClick={() => inputRef.current?.click()}>
               <Icon icon="ph:folder-open" width="16" aria-hidden="true" /> {info ? "Replace file" : "Open SVG file"}
             </button>
