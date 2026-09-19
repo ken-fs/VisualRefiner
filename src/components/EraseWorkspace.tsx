@@ -190,11 +190,21 @@ export function EraseWorkspace() {
       const ctx = canvas.getContext("2d")!;
       ctx.drawImage(out, 0, 0);
 
+      // Swap the working bitmap to the cleaned pixels and clear the mask, so a
+      // second round of painting builds on the result instead of the original.
+      const cleaned = await createImageBitmap(out);
+      bitmapRef.current?.close();
+      bitmapRef.current = cleaned;
+      const maskCtx = mask.getContext("2d")!;
+      maskCtx.fillStyle = "#000000";
+      maskCtx.fillRect(0, 0, mask.width, mask.height);
+      setHasMask(false);
+
       const type = file.type === "image/png" || file.type === "image/webp" ? file.type : "image/jpeg";
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, type, 0.95));
       if (!blob) throw new Error("Could not encode the cleaned image.");
       setResult({ url: URL.createObjectURL(blob), size: blob.size });
-      setStage("done");
+      setStage("ready");
     } catch (reason) {
       console.error(reason);
       setError(reason instanceof Error ? reason.message : "Erasing failed.");
@@ -227,6 +237,7 @@ export function EraseWorkspace() {
                 e.currentTarget.setPointerCapture(e.pointerId);
                 painting.current = true;
                 lastPoint.current = null;
+                setResult(null); // new paint makes the previous download stale
                 paintStroke(canvasPoint(e));
               }}
               onPointerMove={(e) => {
@@ -304,7 +315,7 @@ export function EraseWorkspace() {
           {error}
         </p>
       )}
-      {result && file && stage === "done" && (
+      {result && file && (
         <div className="result-strip" aria-live="polite">
           <div>
             <span>Cleaned image ready</span>
