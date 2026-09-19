@@ -44,7 +44,18 @@ export function loadModel(model: ModelSize, onProgress: (percent: number) => voi
 }
 
 async function createPipeline(modelId: string, onProgress: (percent: number) => void): Promise<AsrPipeline> {
-  const { pipeline } = await import("@huggingface/transformers");
+  const { env, pipeline } = await import("@huggingface/transformers");
+  // The bundled asyncify WASM (~26MB) exceeds Cloudflare's 25MiB per-asset limit,
+  // so the post-build step strips it and the runtime fetches it from the CDN
+  // instead. Pinned to the exact onnxruntime-web build transformers 4.3.0 ships
+  // (see node_modules/.pnpm/onnxruntime-web@…); a version mismatch breaks WASM ABI.
+  const wasmEnv = env.backends.onnx.wasm;
+  if (wasmEnv) {
+    wasmEnv.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.0-dev.20260914-8d85527a0/dist/";
+    // CDN 加载时 Worker 跨域会被浏览器拦截，多线程路径必挂——强制单线程，
+    // 无 SharedArrayBuffer 依赖，也兼容没有 COOP/COEP 的部署。
+    wasmEnv.numThreads = 1;
+  }
   const files = new Map<string, number>();
   const track = (info: { status?: string; file?: string; progress?: number }) => {
     if (info.status === "progress" && info.file && typeof info.progress === "number") {
@@ -54,11 +65,22 @@ async function createPipeline(modelId: string, onProgress: (percent: number) => 
     }
   };
   const options = { progress_callback: track };
+  // WebGPU 存在≠可用（headless/无 GPU 环境 requestAdapter 返回 null），
+  // 而 transformers.js 会把第一次失败的 session 缓存在模型级，之后任何 device
+  // 请求都复用这个 rejected promise——所以必须先探测，不能“先试再 catch”。
+  let webgpuReady = false;
   if (typeof navigator !== "undefined" && "gpu" in navigator) {
+    try {
+      webgpuReady = Boolean(await (navigator as unknown as { gpu: { requestAdapter(): Promise<unknown> } }).gpu.requestAdapter());
+    } catch {
+      webgpuReady = false;
+    }
+  }
+  if (webgpuReady) {
     try {
       return (await pipeline("automatic-speech-recognition", modelId, { device: "webgpu", ...options })) as AsrPipeline;
     } catch {
-      // WebGPU present but the model/session failed — fall through to WASM.
+      // WebGPU 可用但模型/session 失败——继续走 WASM。
     }
   }
   return (await pipeline("automatic-speech-recognition", modelId, { device: "wasm", ...options })) as AsrPipeline;

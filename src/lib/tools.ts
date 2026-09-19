@@ -57,6 +57,15 @@ export const tools: ToolDefinition[] = [
     available: true,
   },
   {
+    slug: "/svg-viewer",
+    name: "SVG viewer",
+    shortName: "View SVG",
+    description: "Preview an SVG and inspect its viewBox and structure.",
+    formats: "SVG",
+    group: "image",
+    available: true,
+  },
+  {
     slug: "/check-image-origin",
     name: "Image origin checker",
     shortName: "Check origin",

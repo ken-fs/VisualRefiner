@@ -6,6 +6,31 @@ current stack (Next.js static export, browser-only processing) and fits the
 `src/lib/tools.ts` / `src/lib/conversions.ts` / `src/lib/guides.ts` registries so
 they flow into the home tool index, sitemap, and internal links automatically.
 
+## Shipped (2026-09-18)
+
+- `/svg-viewer` — SVG preview + inspector (viewBox / width-height / element & path
+  counts), zoom 25–400%, checkerboard/light/dark backgrounds, paste-markup input.
+  Rendered via blob URL in an `<img>`, so embedded scripts never execute. Registered
+  in `tools.ts` (image group) → auto-wired into home index, sitemap, related tools.
+  Market note: "svg viewer online" SERP is farm-dominated (no iloveimg-class
+  monopoly) — competitive window once the domain exits sandbox.
+- **Deploy unblock (critical):** the ONNX asyncify WASM (~25.6MB) exceeded
+  Cloudflare's 25 MiB per-asset limit and had been silently failing every deploy
+  since the transcription feature landed — the site was frozen at pre-transcription
+  state. Fix: `transcriber.ts` sets `env.backends.onnx.wasm.wasmPaths` to the CDN
+  (pinned to onnxruntime-web 1.31.0-dev.20260914, must match transformers 4.3.0's
+  bundled build) + `scripts/strip-oversize-assets.mjs` removes local >25MiB .wasm
+  files post-build (chained into `npm run build`). All transcription pages are now
+  live for the first time.
+- **Two follow-up runtime bugs found via Playwright E2E** (`Ship/scripts/browser`):
+  1) transformers.js caches the first failed session at model level, so a failed
+  WebGPU attempt poisons every later device request — fixed by probing
+  `navigator.gpu.requestAdapter()` and only attempting WebGPU when an adapter
+  actually exists; 2) `env.backends.onnx.wasm.numThreads = 1` because ORT's
+  threaded path spawns Workers which browsers refuse cross-origin from a CDN.
+  Verified end-to-end: real wav upload → "Hello." transcript, 4s, in headless
+  Chromium against production.
+
 ## Shipped (2026-08-22)
 
 - `/image-cropper` — drag-select / aspect-ratio crop (Canvas)
