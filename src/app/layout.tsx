@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Bricolage_Grotesque, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { JsonLd } from "@/components/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" });
-const body = Manrope({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+// Fonts are self-hosted (src/fonts, OFL). next/font/google downloads them during the build,
+// and when that download flakes on Cloudflare's builders the whole build fails
+// ("Can't resolve '@vercel/turbopack-next/internal/font/google/font'", 2026-10-06).
+const display = localFont({ src: "../fonts/bricolage-grotesque-latin-wght-normal.woff2", variable: "--font-display", weight: "200 800", display: "swap" });
+const body = localFont({ src: "../fonts/manrope-latin-wght-normal.woff2", variable: "--font-body", weight: "200 800", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://visualrefiner.com"),
