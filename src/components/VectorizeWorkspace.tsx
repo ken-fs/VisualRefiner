@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
+import { DEFAULT_DXF_SETTINGS, DxfSettings, downloadText, dxfOptions, type DxfSettingsValue } from "@/components/DxfSettings";
 import { Select } from "@/components/Select";
+import { svgToDxf, type DxfResult } from "@/lib/svg-geometry";
 import { formatBytes, outputName } from "@/lib/tools";
 import {
   STYLE_DEFAULTS,
@@ -22,6 +24,15 @@ import {
 type Source = { bitmap: ImageBitmap; width: number; height: number };
 type Result = { svg: string; url: string; size: number; paths: number; colors: number; ms: number };
 
+function buildDxf(svg: string, settings: DxfSettingsValue): DxfResult | null {
+  try {
+    return svgToDxf(svg, dxfOptions(settings));
+  } catch (reason) {
+    console.error(reason);
+    return null;
+  }
+}
+
 const CHECKER = "repeating-conic-gradient(#e8e8e8 0% 25%, #ffffff 0% 50%) 50% / 16px 16px";
 
 const CURVE_LABELS: Record<CurveMode, string> = {
@@ -35,7 +46,14 @@ const LAYERING_LABELS: Record<Layering, string> = {
   cutout: "Cut out (no overlaps)",
 };
 
-export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, JPG, or WebP" }: { defaultStyle?: TraceStyle; sourceLabel?: string }) {
+type VectorizeProps = {
+  defaultStyle?: TraceStyle;
+  sourceLabel?: string;
+  /** "dxf" adds size/accuracy settings and a DXF download for laser and CNC software. */
+  output?: "svg" | "dxf";
+};
+
+export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, JPG, or WebP", output = "svg" }: VectorizeProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState("");
@@ -47,6 +65,18 @@ export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, 
   const [result, setResult] = useState<Result | null>(null);
   const [view, setView] = useState<"svg" | "original">("svg");
   const [copied, setCopied] = useState(false);
+  const [dxfSettings, setDxfSettings] = useState<DxfSettingsValue>(DEFAULT_DXF_SETTINGS);
+  const [dxf, setDxf] = useState<DxfResult | null>(null);
+
+  // The trace effect reads the latest DXF settings through this ref, so changing
+  // the output width rewrites the DXF without re-tracing the image.
+  const dxfSettingsRef = useRef(dxfSettings);
+
+  function changeDxfSettings(next: DxfSettingsValue) {
+    dxfSettingsRef.current = next;
+    setDxfSettings(next);
+    if (result && output === "dxf") setDxf(buildDxf(result.svg, next));
+  }
 
   useEffect(() => () => {
     if (imageUrl) URL.revokeObjectURL(imageUrl);
@@ -83,6 +113,7 @@ export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, 
         const svg = finalizeSvg(raw, traced, source);
         const blob = new Blob([svg], { type: "image/svg+xml" });
         setResult({ svg, url: URL.createObjectURL(blob), size: blob.size, ...svgStats(svg), ms: performance.now() - started });
+        if (output === "dxf") setDxf(buildDxf(svg, dxfSettingsRef.current));
         setView("svg");
       } catch (reason) {
         if (cancelled || (reason instanceof DOMException && reason.name === "AbortError")) return;
@@ -96,7 +127,7 @@ export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, 
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [source, settings]);
+  }, [source, settings, output]);
 
   async function chooseFile(next: File | undefined) {
     if (!next) return;
@@ -262,6 +293,8 @@ export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, 
             />
           </label>
 
+          {output === "dxf" && <DxfSettings value={dxfSettings} onChange={changeDxfSettings} showLayers={!binary} />}
+
           <button className="primary-action" type="button" disabled={busy} onClick={() => inputRef.current?.click()}>
             <Icon icon={busy ? "ph:circle-notch" : "ph:image"} className={busy ? "spin" : ""} width="20" />
             {busy ? "Tracing locally…" : file ? "Trace another image" : "Choose an image"}
@@ -276,7 +309,35 @@ export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, 
 
       {error && <p className="error-message" role="alert"><Icon icon="ph:warning" width="20" />{error}</p>}
 
-      {result && file && (
+      {result && file && output === "dxf" && dxf && (
+        <div className="result-strip" aria-live="polite">
+          <div>
+            <span>DXF ready</span>
+            <strong>
+              {dxf.width.toFixed(dxfSettings.unit === "in" ? 2 : 1)} × {dxf.height.toFixed(dxfSettings.unit === "in" ? 2 : 1)} {dxfSettings.unit}
+            </strong>
+            <small>
+              {dxf.entities} shapes · {dxf.layers} {dxf.layers === 1 ? "layer" : "layers"} · {formatBytes(dxf.dxf.length)}
+            </small>
+          </div>
+          <div className="trace-actions">
+            <a className="file-select-button" href={result.url} download={outputName(file.name, "traced", "svg")}>
+              <Icon icon="ph:file-svg" width="20" aria-hidden="true" />
+              SVG
+            </a>
+            <button
+              className="download-action"
+              type="button"
+              onClick={() => downloadText(dxf.dxf, outputName(file.name, "traced", "dxf"), "application/dxf")}
+            >
+              <Icon icon="ph:download-simple" width="20" aria-hidden="true" />
+              Download DXF
+            </button>
+          </div>
+        </div>
+      )}
+
+      {result && file && output === "svg" && (
         <div className="result-strip" aria-live="polite">
           <div>
             <span>SVG ready</span>

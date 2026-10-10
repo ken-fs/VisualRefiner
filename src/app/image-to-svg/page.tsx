@@ -53,7 +53,8 @@ export default function ImageToSvgPage() {
           </p>
           <p>
             For layered vinyl, set Layers to <strong>Cut out</strong> so the shapes don&apos;t sit on top of
-            each other. Need a PNG again later? Use <Link href="/svg-to-png">SVG to PNG</Link>. To check the
+            each other. Cutting on a laser or CNC? <Link href="/png-to-dxf">PNG to DXF</Link> gives you a DXF
+            at the exact size. Need a PNG again later? Use <Link href="/svg-to-png">SVG to PNG</Link>. To check the
             paths and viewBox of your file, open it in the <Link href="/svg-viewer">SVG viewer</Link>.
           </p>
         </>

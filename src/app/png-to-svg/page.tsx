@@ -31,7 +31,8 @@ export default function PngToSvgPage() {
           </p>
           <p>
             It&apos;s also what cutting machines want. Cricut Design Space, Silhouette Studio, and laser
-            software can cut along SVG paths. They can&apos;t cut along pixels.
+            software can cut along SVG paths. They can&apos;t cut along pixels. If your laser or CNC software
+            wants DXF, use <Link href="/png-to-dxf">PNG to DXF</Link>.
           </p>
           <h3>PNGs that trace well</h3>
           <p>

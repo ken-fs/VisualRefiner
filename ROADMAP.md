@@ -91,6 +91,15 @@ they flow into the home tool index, sitemap, and internal links automatically.
   stacked vs cutout layers, drop-white, threshold + invert. Tuning measured on
   test images: no upscaling of small images (halo rings), logo layer difference
   32 (JPG noise 84 colors → 4). Browser E2E-verified on PNG/JPG/tiny icon/2048px.
+- **DXF output** — `/svg-to-dxf` (any SVG → DXF) and `/png-to-dxf` (trace, then DXF;
+  defaults to black & white). No dependencies: `src/lib/dxf.ts` parses path data
+  (relative/shorthand/arcs → cubics), flattens within a chord tolerance (fine
+  0.01 / normal 0.05 / draft 0.2 mm) and writes R12 POLYLINEs with one layer per
+  color (nearest ACI). `src/lib/svg-geometry.ts` mounts the sanitized SVG
+  off-screen so the browser resolves transforms, CSS colors and units; expands
+  `<use>`, skips text/hidden/defs. Output sized to a typed width in mm or inches.
+  ezdxf audit: 0 errors on a transforms/arcs/use/CSS test file and traced PNG/JPG.
+  Not yet: centerline (single-stroke) tracing — traced lines export as outlines.
 - Fix: `Select` options inside `<label>` re-opened the list after a pick (the label
   forwarded the click to the trigger) — affected every dropdown on the site.
 
