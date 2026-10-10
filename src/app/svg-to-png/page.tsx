@@ -40,6 +40,10 @@ export default function SvgToPngPage() {
             <Link href="/image-compressor">image compressor</Link>. Everything happens in this tab; the
             SVG is never uploaded.
           </p>
+          <p>
+            Need the opposite direction? <Link href="/png-to-svg">PNG to SVG</Link> traces a raster logo or
+            icon back into vector paths.
+          </p>
         </>
       }
       faqs={[
@@ -61,7 +65,7 @@ export default function SvgToPngPage() {
         },
         {
           question: "Can I convert PNG back to SVG?",
-          answer: "Not with this tool. Going from pixels to vectors requires tracing (an approximation, not a true conversion) — this converter only goes the reliable direction, SVG to raster.",
+          answer: "Not with this tool, but the PNG to SVG tool on this site does it. Going from pixels to vectors means tracing the image into shapes, so the result is a close redrawing rather than the original vector file.",
         },
       ]}
     >

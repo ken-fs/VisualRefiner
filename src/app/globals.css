@@ -343,6 +343,11 @@ button:disabled { cursor: wait; opacity: 0.68; }
 .result-strip span { font-size: 0.72rem; font-weight: 850; text-transform: uppercase; letter-spacing: 0.06em; }
 .result-strip strong { font-family: var(--font-display), sans-serif; font-size: 1.35rem; }
 .result-strip small { grid-column: 1 / -1; color: #433b16; }
+.result-strip > .trace-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.trace-view-toggle { position: absolute; top: 18px; right: 18px; z-index: 2; display: flex; border: 1px solid var(--line-dark); border-radius: 999px; overflow: hidden; background: var(--paper-strong); }
+.trace-view-toggle button { border: 0; padding: 6px 14px; color: var(--muted); background: transparent; font-size: 0.75rem; font-weight: 850; letter-spacing: 0.07em; text-transform: uppercase; }
+.trace-view-toggle button[aria-pressed="true"] { color: var(--paper-strong); background: var(--ink); }
 
 .workspace-compact .workspace-grid { grid-template-columns: minmax(0, 1.3fr) minmax(205px, 0.7fr); }
 .workspace-compact .drop-field { min-height: 455px; }
@@ -573,6 +578,7 @@ button:disabled { cursor: wait; opacity: 0.68; }
   .frame-controls .file-select-button, .gif-controls .file-select-button { grid-column: auto; }
   .contact-sheet { grid-template-columns: repeat(2, 1fr); padding: 0 16px 16px; }
   .gif-result { grid-template-columns: 1fr; padding: 0 16px 18px; }
+  .result-strip:has(.trace-actions) { flex-direction: column; align-items: stretch; }
   .gif-result .download-action { grid-column: auto; }
   .site-footer { grid-template-columns: 1fr; padding: 48px 0; }
   .site-footer nav { flex-wrap: wrap; }

@@ -66,6 +66,9 @@ importers:
       typescript:
         specifier: ^5
         version: 5.9.3
+      vtracer-wasm:
+        specifier: 0.1.0
+        version: 0.1.0
 
 packages:
 
@@ -2213,6 +2216,9 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  vtracer-wasm@0.1.0:
+    resolution: {integrity: sha512-q0A/z1NIuzROEJ9Z4NJirsl+PIH47sU5XKqLv/m7Nrf5MVDPcwogT1YfMBwfekncEeep8VLj6y60hpomwJJH6g==}
 
   wasm-feature-detect@1.9.0:
     resolution: {integrity: sha512-zonE+xlIIYtxPy++L24ow0hAD8CICb4+FgPyROd3buyXIqsJvUEDkBgfCCoXOd1Hu3DUr0GOfnPIdcGV+YpNaA==}
@@ -4617,6 +4623,8 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  vtracer-wasm@0.1.0: {}
 
   wasm-feature-detect@1.9.0: {}
 

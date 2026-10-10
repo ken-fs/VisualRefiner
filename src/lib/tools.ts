@@ -66,6 +66,15 @@ export const tools: ToolDefinition[] = [
     available: true,
   },
   {
+    slug: "/image-to-svg",
+    name: "Image to SVG",
+    shortName: "Vectorize",
+    description: "Trace a PNG or JPG into vector paths, in color or black and white.",
+    formats: "PNG · JPG · WebP → SVG",
+    group: "image",
+    available: true,
+  },
+  {
     slug: "/check-image-origin",
     name: "Image origin checker",
     shortName: "Check origin",

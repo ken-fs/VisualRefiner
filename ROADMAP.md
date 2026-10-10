@@ -81,6 +81,19 @@ they flow into the home tool index, sitemap, and internal links automatically.
   does AVIF in Chromium); decoder is a fallback for older Safari. E2E-verified
   in Node (encode+decode round-trip). `guides/avif-vs-webp` now links the tools.
 
+## Shipped (2026-10-10)
+
+- **Image → SVG tracing** — `/image-to-svg` (tool) + `/png-to-svg`, `/jpg-to-svg`
+  (conversion pages), all on `VectorizeWorkspace`. Engine: vtracer (MIT) via the
+  vtracer-wasm build (137 KB), served from `public/vendor/vtracer/` and run in a
+  module worker (`trace-worker.mjs`) — same vendor-asset pattern as AVIF. Styles:
+  logo / illustration / photo / black & white, with color detail, speck filter,
+  stacked vs cutout layers, drop-white, threshold + invert. Tuning measured on
+  test images: no upscaling of small images (halo rings), logo layer difference
+  32 (JPG noise 84 colors → 4). Browser E2E-verified on PNG/JPG/tiny icon/2048px.
+- Fix: `Select` options inside `<label>` re-opened the list after a pick (the label
+  forwarded the click to the trigger) — affected every dropdown on the site.
+
 ## Backlog — not yet built
 
 ### 1. Batch image conversion + ZIP download — value: high, effort: M

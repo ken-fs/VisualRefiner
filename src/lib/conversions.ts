@@ -25,6 +25,8 @@ export const conversions: Conversion[] = [
   { slug: "/svg-to-png", label: "SVG to PNG", group: "image" },
   { slug: "/svg-to-jpg", label: "SVG to JPG", group: "image" },
   { slug: "/svg-to-webp", label: "SVG to WebP", group: "image" },
+  { slug: "/png-to-svg", label: "PNG to SVG", group: "image" },
+  { slug: "/jpg-to-svg", label: "JPG to SVG", group: "image" },
   { slug: "/mov-to-mp4", label: "MOV to MP4", group: "video" },
   { slug: "/mkv-to-mp4", label: "MKV to MP4", group: "video" },
   { slug: "/webm-to-mp4", label: "WebM to MP4", group: "video" },

@@ -113,7 +113,12 @@ export function Select({ value, onChange, options, ariaLabel }: SelectProps) {
               aria-selected={option.value === value}
               className={`select-option ${index === active ? "is-active" : ""}`}
               onMouseEnter={() => setActive(index)}
-              onClick={() => commit(index)}
+              // Selects sit inside <label> wrappers; without preventDefault the
+              // label forwards this click to the trigger button and reopens the list.
+              onClick={(event) => {
+                event.preventDefault();
+                commit(index);
+              }}
             >
               <Icon
                 icon="ph:check"
