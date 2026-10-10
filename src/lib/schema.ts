@@ -10,7 +10,7 @@ export const organizationSchema = {
   name: SITE_NAME,
   url: SITE_URL,
   logo: `${SITE_URL}/icon.svg`,
-  description: "Browser-local image and video tools. Files are processed on your device and are not uploaded.",
+  description: "Browser-local tools that turn images into SVG and DXF cut files, plus image and video converters. Files are processed on your device and are not uploaded.",
 };
 
 export const websiteSchema = {

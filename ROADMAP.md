@@ -100,6 +100,14 @@ they flow into the home tool index, sitemap, and internal links automatically.
   `<use>`, skips text/hidden/defs. Output sized to a typed width in mm or inches.
   ezdxf audit: 0 errors on a transforms/arcs/use/CSS test file and traced PNG/JPG.
   Not yet: centerline (single-stroke) tracing — traced lines export as outlines.
+- **Focus + cleanup (2026-10-10 diagnosis)** — GSC: impressions were all at
+  position 80–90 and fell to ~0 on 9/14 (site-specific; pages still indexed), 0
+  organic clicks ever. Cause: head-term conversions vs DA-90 incumbents, no
+  earned links, no topical focus. Changes: homepage now leads with image → SVG /
+  DXF cut files (hero bench = tracer, "Pick by your machine" section, vector
+  column first); GA removed (privacy page now discloses Cloudflare Web
+  Analytics, cookieless — also unblocks pluja/awesome-privacy); sitemap lastmod
+  from each page file's last commit (was one hardcoded date for every URL).
 - Fix: `Select` options inside `<label>` re-opened the list after a pick (the label
   forwarded the click to the trigger) — affected every dropdown on the site.
 

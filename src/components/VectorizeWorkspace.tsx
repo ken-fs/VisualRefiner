@@ -51,9 +51,11 @@ type VectorizeProps = {
   sourceLabel?: string;
   /** "dxf" adds size/accuracy settings and a DXF download for laser and CNC software. */
   output?: "svg" | "dxf";
+  /** Narrower layout for the homepage hero. */
+  compact?: boolean;
 };
 
-export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, JPG, or WebP", output = "svg" }: VectorizeProps) {
+export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, JPG, or WebP", output = "svg", compact = false }: VectorizeProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState("");
@@ -171,7 +173,7 @@ export function VectorizeWorkspace({ defaultStyle = "logo", sourceLabel = "PNG, 
   const showSvg = result && view === "svg";
 
   return (
-    <section className="media-workspace image-workspace" aria-label="Image to SVG converter">
+    <section className={`media-workspace image-workspace ${compact ? "workspace-compact" : ""}`} aria-label="Image to SVG converter">
       <div className="bench-topline">
         <span>Local tracing bench</span>
         <span>{file ? formatBytes(file.size) : "No file loaded"}</span>

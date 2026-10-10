@@ -12,6 +12,15 @@ export type ToolDefinition = {
 
 export const tools: ToolDefinition[] = [
   {
+    slug: "/image-to-svg",
+    name: "Image to SVG",
+    shortName: "Vectorize",
+    description: "Trace a PNG or JPG into vector paths, in color or black and white.",
+    formats: "PNG · JPG · WebP → SVG",
+    group: "image",
+    available: true,
+  },
+  {
     slug: "/image-converter",
     name: "Image converter",
     shortName: "Convert",
@@ -62,15 +71,6 @@ export const tools: ToolDefinition[] = [
     shortName: "View SVG",
     description: "Preview an SVG and inspect its viewBox and structure.",
     formats: "SVG",
-    group: "image",
-    available: true,
-  },
-  {
-    slug: "/image-to-svg",
-    name: "Image to SVG",
-    shortName: "Vectorize",
-    description: "Trace a PNG or JPG into vector paths, in color or black and white.",
-    formats: "PNG · JPG · WebP → SVG",
     group: "image",
     available: true,
   },

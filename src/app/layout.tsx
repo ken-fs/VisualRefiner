@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import localFont from "next/font/local";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -15,8 +14,9 @@ const body = localFont({ src: "../fonts/manrope-latin-wght-normal.woff2", variab
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://visualrefiner.com"),
-  title: { default: "VisualRefiner — Local Image and Video Tools", template: "%s — VisualRefiner" },
-  description: "Convert, compress, resize, and extract image or video files in your browser.",
+  title: { default: "VisualRefiner — PNG to SVG, SVG to DXF & Image Tools, No Upload", template: "%s — VisualRefiner" },
+  description:
+    "Turn images into SVG and DXF cut files for Cricut, laser, and CNC, plus everyday image and video converters. Everything runs in your browser, nothing is uploaded.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -35,21 +35,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Google tag (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-HYFY8VQPPX"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-HYFY8VQPPX');
-          `}
-        </Script>
-      </head>
+      {/* No Google Analytics on purpose: a no-upload privacy tool can't ship a
+          third-party tracker (it also blocks privacy-list listings). Visits are
+          counted by Cloudflare Web Analytics, which the edge injects — cookieless. */}
       <body className={`${display.variable} ${body.variable}`}>
         {/*
           THESIS: Visual files enter a precision inspection bench, refusing the generic SaaS hero and card grid.

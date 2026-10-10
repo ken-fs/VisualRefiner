@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { ImageWorkspace } from "@/components/ImageWorkspace";
 import { PrivacyPath } from "@/components/PrivacyPath";
 import { ToolIndex } from "@/components/ToolIndex";
+import { VectorizeWorkspace } from "@/components/VectorizeWorkspace";
 import { JsonLd } from "@/components/JsonLd";
 import { conversions } from "@/lib/conversions";
 import { tools } from "@/lib/tools";
 import { itemListSchema } from "@/lib/schema";
+
+// The trace-to-SVG and DXF pages are the site's focus, so they get their own column.
+const isVector = (slug: string) => /-to-(svg|dxf)$/.test(slug);
 
 export default function HomePage() {
   return (
@@ -14,22 +17,25 @@ export default function HomePage() {
       <JsonLd data={itemListSchema({ name: "VisualRefiner tools", items: tools.map((t) => ({ name: t.name, slug: t.slug })) })} />
       <section className="home-hero">
         <div className="hero-copy">
-          <h1>Make visual files behave.</h1>
-          <p className="hero-lede">Convert, compress, resize, and extract. Your files stay on this device.</p>
+          <h1>Turn images into cut files.</h1>
+          <p className="hero-lede">
+            Trace a logo or drawing into SVG for Cricut, or DXF for laser and CNC. Plus everyday image and video
+            converters. Your files stay on this device.
+          </p>
           <div className="hero-links">
-            <Link href="#quick-convert">Convert an image</Link>
+            <Link href="/image-to-svg">Trace an image to SVG</Link>
             <Link href="/#all-tools">Browse every tool</Link>
           </div>
           <nav className="hero-task-index" aria-label="Quick tool index">
-            <Link href="/image-compressor">Compress an image <Icon icon="ph:arrow-up-right" width="17" /></Link>
-            <Link href="/image-resizer">Resize an image <Icon icon="ph:arrow-up-right" width="17" /></Link>
-            <Link href="/video-converter">Convert a video <Icon icon="ph:arrow-up-right" width="17" /></Link>
+            <Link href="/png-to-svg">PNG to SVG <Icon icon="ph:arrow-up-right" width="17" /></Link>
+            <Link href="/svg-to-dxf">SVG to DXF <Icon icon="ph:arrow-up-right" width="17" /></Link>
+            <Link href="/png-to-dxf">PNG to DXF <Icon icon="ph:arrow-up-right" width="17" /></Link>
           </nav>
           <p className="hero-constraints">No upload · No account · Free local tools</p>
         </div>
         <div className="hero-bench" id="quick-convert">
           <div className="bench-ruler" aria-hidden="true"><span /><span /><span /><span /><span /></div>
-          <ImageWorkspace mode="convert" compact />
+          <VectorizeWorkspace compact />
         </div>
       </section>
 
@@ -38,27 +44,27 @@ export default function HomePage() {
 
       <section className="format-guide" aria-labelledby="format-guide-title">
         <div className="format-guide-title">
-          <h2 id="format-guide-title">Choose by the result.</h2>
-          <p>Format names are confusing. The goal is not.</p>
+          <h2 id="format-guide-title">Pick by your machine.</h2>
+          <p>Each one wants a different file. Here&apos;s which to make.</p>
         </div>
         <div className="format-notes">
           <article>
-            <Icon icon="ph:camera" width="28" aria-hidden="true" />
-            <h3>Smaller photos</h3>
-            <p>Use JPG or WebP. Start near 82% quality.</p>
-            <Link href="/image-compressor">Compress a photo</Link>
+            <Icon icon="ph:scissors" width="28" aria-hidden="true" />
+            <h3>Cricut &amp; Silhouette</h3>
+            <p>Upload an SVG. Use Black &amp; white for one color, or Cut out layers for layered vinyl.</p>
+            <Link href="/png-to-svg">PNG to SVG</Link>
           </article>
           <article>
-            <Icon icon="ph:selection" width="28" aria-hidden="true" />
-            <h3>Sharp transparency</h3>
-            <p>Keep PNG when clean edges need transparency.</p>
-            <Link href="/image-converter">Convert an image</Link>
+            <Icon icon="ph:lightning" width="28" aria-hidden="true" />
+            <h3>Laser &amp; CNC</h3>
+            <p>Most laser and CAD software takes DXF. Type the real width and it comes out at that size.</p>
+            <Link href="/svg-to-dxf">SVG to DXF</Link>
           </article>
           <article>
-            <Icon icon="ph:film-slate" width="28" aria-hidden="true" />
-            <h3>Web-ready video</h3>
-            <p>Try MP4 first. Use WebM for modern web playback.</p>
-            <Link href="/video-converter">Convert a video</Link>
+            <Icon icon="ph:pen-nib" width="28" aria-hidden="true" />
+            <h3>Sketches &amp; signatures</h3>
+            <p>Photograph it on white paper and trace it in black and white.</p>
+            <Link href="/jpg-to-svg">JPG to SVG</Link>
           </article>
         </div>
       </section>
@@ -70,9 +76,17 @@ export default function HomePage() {
         </div>
         <div className="conversion-columns">
           <div>
+            <h3>Vector &amp; cut files</h3>
+            <ul>
+              {conversions.filter((c) => c.group === "image" && isVector(c.slug)).map((c) => (
+                <li key={c.slug}><Link href={c.slug}>{c.label}<Icon icon="ph:arrow-up-right" width="15" aria-hidden="true" /></Link></li>
+              ))}
+            </ul>
+          </div>
+          <div>
             <h3>Images</h3>
             <ul>
-              {conversions.filter((c) => c.group === "image").map((c) => (
+              {conversions.filter((c) => c.group === "image" && !isVector(c.slug)).map((c) => (
                 <li key={c.slug}><Link href={c.slug}>{c.label}<Icon icon="ph:arrow-up-right" width="15" aria-hidden="true" /></Link></li>
               ))}
             </ul>
