@@ -15,3 +15,5 @@ tsconfig.tsbuildinfo
 # 私有运营文件（不提交）
 /outreach-progress.md
 /article-metadata-blogger.html
+# 社区推广草稿（Reddit/HN）：公开仓库里放草稿会被当成营销号
+/外链/maker-launch-drafts.md
