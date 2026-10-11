@@ -1,52 +1,95 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Source for public/og.png. Render with `node scripts/render-og.mjs` (headless Chrome,
+       so the self-hosted brand fonts below actually load). Copy mirrors the homepage hero. -->
+  <style>
+    @font-face { font-family: "Bricolage Grotesque"; src: url("../src/fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; }
+    @font-face { font-family: "Manrope"; src: url("../src/fonts/manrope-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; }
+    .display { font-family: "Bricolage Grotesque", sans-serif; font-weight: 760; letter-spacing: -0.04em; fill: #17211c; }
+    .body { font-family: "Manrope", sans-serif; }
+    .label { font-family: "Manrope", sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.07em; }
+  </style>
+
   <rect width="1200" height="630" fill="#fffaf0"/>
   <rect x="0" y="0" width="1200" height="12" fill="#d43d1f"/>
 
   <!-- ruler ticks -->
   <g stroke="#98a79f" stroke-width="2">
-    <line x1="80" y1="86" x2="80" y2="110"/>
-    <line x1="130" y1="86" x2="130" y2="102"/>
-    <line x1="180" y1="86" x2="180" y2="102"/>
-    <line x1="230" y1="86" x2="230" y2="110"/>
-    <line x1="280" y1="86" x2="280" y2="102"/>
-    <line x1="330" y1="86" x2="330" y2="102"/>
+    <line x1="80" y1="70" x2="80" y2="94"/>
+    <line x1="130" y1="70" x2="130" y2="86"/>
+    <line x1="180" y1="70" x2="180" y2="86"/>
+    <line x1="230" y1="70" x2="230" y2="94"/>
+    <line x1="280" y1="70" x2="280" y2="86"/>
+    <line x1="330" y1="70" x2="330" y2="86"/>
   </g>
 
-  <!-- wordmark -->
+  <!-- wordmark: src/app/icon.svg at 42px -->
+  <g transform="translate(80 128) scale(0.65625)">
+    <rect width="64" height="64" rx="14" fill="#17211c"/>
+    <circle cx="31" cy="29" r="17" fill="none" stroke="#f25c3b" stroke-width="6"/>
+    <path d="M43 41l10 10" stroke="#f4d35e" stroke-width="7" stroke-linecap="round"/>
+    <path d="M31 7v8M31 43v8M9 29h8M45 29h8" stroke="#dce5df" stroke-width="3"/>
+  </g>
+  <text x="136" y="160" class="display" font-size="34" font-weight="700" letter-spacing="-0.02em">VisualRefiner</text>
+
+  <!-- headline (homepage h1) -->
+  <text x="76" y="290" class="display" font-size="90">Turn images</text>
+  <text x="76" y="373" class="display" font-size="90">into cut files.</text>
+
+  <!-- lede (homepage hero, first sentence) -->
+  <text x="80" y="438" class="body" font-size="28" font-weight="500" fill="#526159">Trace a logo or drawing into SVG for Cricut,</text>
+  <text x="80" y="476" class="body" font-size="28" font-weight="500" fill="#526159">or DXF for laser and CNC.</text>
+
+  <!-- constraints chip (homepage hero) -->
   <g>
-    <rect x="80" y="150" width="34" height="34" rx="7" fill="#17211c"/>
-    <rect x="90" y="160" width="14" height="14" rx="3" fill="#f2cf52"/>
-    <text x="130" y="178" font-size="34" font-weight="700" fill="#17211c">VisualRefiner</text>
+    <rect x="80" y="520" width="486" height="52" rx="26" fill="#dce5df"/>
+    <circle cx="111" cy="546" r="7" fill="#d43d1f"/>
+    <text x="130" y="555" class="body" font-size="23" font-weight="700" fill="#17211c">No upload · No account · Free local tools</text>
   </g>
 
-  <!-- headline -->
-  <text x="78" y="300" font-size="76" font-weight="800" fill="#17211c">Make visual files</text>
-  <text x="78" y="380" font-size="76" font-weight="800" fill="#17211c">behave.</text>
-
-  <!-- subline -->
-  <text x="80" y="452" font-size="30" font-weight="500" fill="#526159">Convert, compress, resize, and extract —</text>
-  <text x="80" y="492" font-size="30" font-weight="500" fill="#526159">image and video, locally in your browser.</text>
-
-  <!-- constraints chip -->
+  <!-- inspection bench: raster in, vector cut path out -->
   <g>
-    <rect x="80" y="530" width="470" height="52" rx="26" fill="#dce5df"/>
-    <circle cx="112" cy="556" r="7" fill="#d43d1f"/>
-    <text x="132" y="565" font-size="24" font-weight="600" fill="#17211c">No upload · No account · Free local tools</text>
-  </g>
-
-  <!-- inspection bench / lens motif -->
-  <g>
-    <rect x="770" y="150" width="360" height="330" rx="20" fill="#dce5df" stroke="#98a79f" stroke-width="2"/>
+    <rect x="730" y="128" width="400" height="388" rx="14" fill="#dce5df" stroke="#98a79f" stroke-width="2"/>
     <!-- crop ticks -->
-    <g stroke="#65736c" stroke-width="4" stroke-linecap="round">
-      <path d="M810 190 h-24 v24" fill="none"/>
-      <path d="M1090 190 h24 v24" fill="none"/>
-      <path d="M810 440 h-24 v-24" fill="none"/>
-      <path d="M1090 440 h24 v-24" fill="none"/>
+    <g stroke="#65736c" stroke-width="4" stroke-linecap="round" fill="none">
+      <path d="M770 160 h-20 v20"/>
+      <path d="M1090 160 h20 v20"/>
+      <path d="M770 484 h-20 v-20"/>
+      <path d="M1090 484 h20 v-20"/>
     </g>
-    <!-- lens -->
-    <circle cx="950" cy="315" r="92" fill="#fffaf0" stroke="#17211c" stroke-width="6"/>
-    <circle cx="950" cy="315" r="60" fill="none" stroke="#98a79f" stroke-width="3"/>
-    <line x1="1016" y1="381" x2="1070" y2="435" stroke="#d43d1f" stroke-width="14" stroke-linecap="round"/>
+
+    <!-- input tile: pixel heart -->
+    <rect x="768" y="196" width="150" height="190" rx="9" fill="#fffdf8" stroke="#98a79f" stroke-width="2"/>
+    <g fill="#17211c" transform="translate(777 232)">
+      <rect x="24" y="0" width="36" height="12"/><rect x="72" y="0" width="36" height="12"/>
+      <rect x="12" y="12" width="108" height="12"/>
+      <rect x="0" y="24" width="132" height="36"/>
+      <rect x="12" y="60" width="108" height="12"/>
+      <rect x="24" y="72" width="84" height="12"/>
+      <rect x="36" y="84" width="60" height="12"/>
+      <rect x="48" y="96" width="36" height="12"/>
+      <rect x="60" y="108" width="12" height="12"/>
+    </g>
+    <text x="843" y="412" class="label" fill="#526159" text-anchor="middle">PNG · JPG</text>
+
+    <!-- arrow -->
+    <path d="M928 291 h22 M942 283 l9 8 l-9 8" stroke="#65736c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+    <!-- output tile: traced outline with nodes -->
+    <rect x="962" y="196" width="150" height="190" rx="9" fill="#fffdf8" stroke="#98a79f" stroke-width="2"/>
+    <g transform="translate(971 232)">
+      <path d="M66 116 C 22 82, 3 58, 3 34 C 3 15, 17 2, 35 2 C 49 2, 60 11, 66 24 C 72 11, 83 2, 97 2 C 115 2, 129 15, 129 34 C 129 58, 110 82, 66 116 Z"
+            fill="none" stroke="#d43d1f" stroke-width="4" stroke-linejoin="round"/>
+      <g fill="#fffdf8" stroke="#17211c" stroke-width="2">
+        <rect x="61" y="111" width="10" height="10"/>
+        <rect x="-2" y="29" width="10" height="10"/>
+        <rect x="30" y="-3" width="10" height="10"/>
+        <rect x="61" y="19" width="10" height="10"/>
+        <rect x="92" y="-3" width="10" height="10"/>
+        <rect x="124" y="29" width="10" height="10"/>
+      </g>
+    </g>
+    <text x="1037" y="412" class="label" fill="#d43d1f" text-anchor="middle">SVG · DXF</text>
+
+    <text x="930" y="462" class="label" fill="#65736c" text-anchor="middle">CRICUT · LASER · CNC</text>
   </g>
 </svg>

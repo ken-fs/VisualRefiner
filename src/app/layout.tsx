@@ -12,6 +12,8 @@ import "./globals.css";
 const display = localFont({ src: "../fonts/bricolage-grotesque-latin-wght-normal.woff2", variable: "--font-display", weight: "200 800", display: "swap" });
 const body = localFont({ src: "../fonts/manrope-latin-wght-normal.woff2", variable: "--font-body", weight: "200 800", display: "swap" });
 
+const OG_IMAGE = "https://visualrefiner.com/og.png?v=2";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://visualrefiner.com"),
   title: { default: "VisualRefiner — PNG to SVG, SVG to DXF & Image Tools, No Upload", template: "%s — VisualRefiner" },
@@ -24,11 +26,12 @@ export const metadata: Metadata = {
     // No title/description here on purpose: Next falls og:title / og:description back to
     // each page's own title/description, so every page gets a correct per-page card.
     url: "https://visualrefiner.com",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "VisualRefiner — local image and video tools" }],
+    // Absolute URL + ?v= so social platforms refetch after the image changes (source: scripts/og.svg).
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "VisualRefiner: turn images into SVG and DXF cut files" }],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og.png"],
+    images: [OG_IMAGE],
   },
 };
 
