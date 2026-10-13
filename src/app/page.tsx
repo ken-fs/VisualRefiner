@@ -17,9 +17,9 @@ export default function HomePage() {
       <JsonLd data={itemListSchema({ name: "VisualRefiner tools", items: tools.map((t) => ({ name: t.name, slug: t.slug })) })} />
       <section className="home-hero">
         <div className="hero-copy">
-          <h1>Turn images into cut files.</h1>
+          <h1>PNG to SVG &amp; DXF converter</h1>
           <p className="hero-lede">
-            Trace a logo or drawing into SVG for Cricut, or DXF for laser and CNC. Plus everyday image and video
+            Turn images into cut files. Trace a logo or drawing into SVG for Cricut, or DXF for laser and CNC. Plus everyday image and video
             converters. Your files stay on this device.
           </p>
           <div className="hero-links">
