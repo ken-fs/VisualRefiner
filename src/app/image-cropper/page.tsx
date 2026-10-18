@@ -32,6 +32,17 @@ export default function ImageCropperPage() {
             16:9 banner, a 4:3 print — pick that aspect ratio first and the box keeps it as you drag. Leave it on
             &ldquo;Free&rdquo; to crop to any rectangle you like.
           </p>
+          <h3>Crop and resize together</h3>
+          <p>
+            Crop first, then resize. Crop to the shape you want, download the file, then set the exact size
+            in the <Link href="/image-resizer">image resizer</Link>. For Instagram, TikTok or Amazon sizes
+            in one go, use <Link href="/resize-for-social">resize for social</Link>.
+          </p>
+          <h3>Circle crop</h3>
+          <p>
+            This tool cuts rectangles only. It can&apos;t make a round image. For a circle avatar, crop a
+            square here, then upload it. Many sites show profile pictures as circles and round the square for you.
+          </p>
           <h3>Quality and format</h3>
           <p>
             The crop is exported at the source resolution of the selected area, so you keep full detail. Choose PNG

@@ -34,6 +34,14 @@ export default function ImageResizerPage() {
             <li><strong>Fitting a layout</strong> — a banner slot, a thumbnail grid, or an avatar expects a particular size, and matching it avoids awkward cropping later.</li>
           </ul>
 
+          <h3>Resizing for Instagram</h3>
+          <p>
+            For Instagram, use the <Link href="/resize-for-social">resize for social tool</Link>. It exports
+            1080×1080 posts, 1080×1350 portraits and 1080×1920 stories and reels. It can crop to fill the
+            frame or fit the whole photo with padding. This page keeps your ratio, so it won&apos;t crop for you.
+            To cut the shape first, use the <Link href="/image-cropper">image cropper</Link>.
+          </p>
+
           <h3>Aspect ratio stays locked</h3>
           <p>
             The width and height here are tied to the original proportions. Type a new width and the height
