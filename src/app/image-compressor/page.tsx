@@ -34,6 +34,18 @@ export default function ImageCompressorPage() {
             <Link href="/guides/image-compression-quality">quality guide</Link> walks through where to set it.
           </p>
 
+          <h3>Optimizing images for a website</h3>
+          <p>
+            To make an image lighter for your website, do two things in order. First,{" "}
+            <Link href="/image-resizer">resize</Link> it to the largest size it will be shown at. Then
+            compress it as WebP at about 82%. That is the main way to get a fast-loading page.
+          </p>
+          <p>
+            This tool works on one image at a time and handles raster photos (JPG, WebP). It won&apos;t
+            shrink the code inside an SVG file. You can turn an SVG into{" "}
+            <Link href="/svg-to-webp">WebP</Link> if a raster copy is fine.
+          </p>
+
           <h3>JPG or WebP?</h3>
           <p>
             WebP usually reaches a smaller file than JPG at the same visible quality, and it handles

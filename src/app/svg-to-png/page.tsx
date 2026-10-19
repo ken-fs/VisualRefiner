@@ -20,7 +20,12 @@ export default function SvgToPngPage() {
       steps={["Choose or drop an SVG file.", "Pick the render scale — 2× suits icons, 1× matches the declared size.", "Convert and download the PNG."]}
       explainer={
         <>
-          <h2 id="learn-title">Why convert SVG to PNG</h2>
+          <h2 id="learn-title">How to change an SVG into a PNG</h2>
+          <p>
+            Drop your SVG on this page, pick a scale (1×, 2× or 4×), and download the PNG. It takes a few
+            seconds and the file stays in your browser. Transparent areas stay transparent.
+          </p>
+          <h3>Why convert SVG to PNG</h3>
           <p>
             SVG is vector: it stays sharp at any size, but plenty of software still wants a raster
             file — app stores, social platforms, presentation tools, game engines. PNG is the raster
