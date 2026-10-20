@@ -30,6 +30,15 @@ export const tools: ToolDefinition[] = [
     available: true,
   },
   {
+    slug: "/svg-converter",
+    name: "SVG converter",
+    shortName: "SVG out",
+    description: "Rasterize an SVG to PNG, JPG or WebP, format your choice.",
+    formats: "SVG → PNG · JPG · WebP",
+    group: "image",
+    available: true,
+  },
+  {
     slug: "/image-compressor",
     name: "Image compressor",
     shortName: "Compress",

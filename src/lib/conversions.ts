@@ -22,6 +22,7 @@ export const conversions: Conversion[] = [
   { slug: "/png-to-avif", label: "PNG to AVIF", group: "image" },
   { slug: "/jpg-to-avif", label: "JPG to AVIF", group: "image" },
   { slug: "/webp-to-avif", label: "WebP to AVIF", group: "image" },
+  { slug: "/svg-converter", label: "SVG Converter", group: "image" },
   { slug: "/svg-to-png", label: "SVG to PNG", group: "image" },
   { slug: "/svg-to-jpg", label: "SVG to JPG", group: "image" },
   { slug: "/svg-to-webp", label: "SVG to WebP", group: "image" },
