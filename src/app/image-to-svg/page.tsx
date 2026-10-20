@@ -26,6 +26,11 @@ export default function ImageToSvgPage() {
         <>
           <h2 id="learn-title">How image to SVG works</h2>
           <p>
+            This is an SVG format converter for PNG, JPG, and WebP files. Drop the image in and you get an
+            SVG back. Going the other way? Use <Link href="/svg-to-png">SVG to PNG</Link>,{" "}
+            <Link href="/svg-to-jpg">SVG to JPG</Link>, or <Link href="/svg-to-webp">SVG to WebP</Link>.
+          </p>
+          <p>
             A PNG or JPG is a grid of colored pixels. An SVG is a list of shapes. To get from one to the
             other, the tool <strong>traces</strong> the image: it groups pixels of the same color, draws an
             outline around each group, and smooths that outline into curves.
@@ -60,6 +65,11 @@ export default function ImageToSvgPage() {
         </>
       }
       faqs={[
+        {
+          question: "What is the SVG format?",
+          answer:
+            "SVG is a vector image format. It stores shapes and paths instead of pixels, so it stays sharp at any size. It's a text file, and browsers and vector editors open it.",
+        },
         {
           question: "Is my image uploaded?",
           answer:

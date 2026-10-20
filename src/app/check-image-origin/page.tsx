@@ -29,6 +29,12 @@ export default function CheckImageOriginPage() {
             Even without credentials, generators leave fingerprints — a software tag, a creator string, a leftover
             prompt in the metadata. This tool reads all of it and lays the evidence out plainly.
           </p>
+          <h3>Want to find an image&apos;s origin?</h3>
+          <p>
+            This tool reads what is inside the file. It can show the creator tool, edit history, and AI
+            flags when they exist. It does not search the web for other copies of the image, so it can&apos;t
+            tell you who posted it first. Use a reverse image search for that.
+          </p>
           <h3>Read the result with care</h3>
           <p>
             A credential saying &quot;AI-generated&quot; is strong evidence. <em>No</em> credential proves nothing:
@@ -39,6 +45,7 @@ export default function CheckImageOriginPage() {
         </>
       }
       faqs={[
+        { question: "Can this find where an image came from online?", answer: "No. It only reads data stored inside the file, like C2PA credentials and software tags. It doesn't search the web or compare your image with others, and nothing is uploaded." },
         { question: "What are Content Credentials (C2PA)?", answer: "C2PA is an open standard that embeds a signed manifest inside an image or video: which tool made it, what edits followed, and whether AI generation was involved. Adobe, Microsoft, OpenAI, Google, Meta and others write them into their tools' output." },
         { question: "Does this verify the cryptographic signature?", answer: "No. It reads the embedded credential and shows you what it claims — the signing tool, history, and AI flags — and tells you a signature is present. Full cryptographic verification against the signing authority needs the official C2PA toolchain." },
         { question: "If no credentials are found, is the image real?", answer: "Not necessarily. Metadata can be removed and many genuine photos have no credentials. An empty report means 'no evidence in the file', not proof of authenticity either way." },
