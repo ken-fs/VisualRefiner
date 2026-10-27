@@ -27,6 +27,13 @@ export default function ImageResizerPage() {
             picture, or a document ever displays — so the extra pixels are weight with no visible benefit.
           </p>
 
+          <h3>How to resize an image to exact pixels</h3>
+          <p>
+            Pick your image, then type the width or height in pixels. The other side updates to keep the
+            shape. Click resize and download the file. If you need a width and height that don&apos;t match the
+            original ratio, crop first with the <Link href="/image-cropper">image cropper</Link>, then resize.
+          </p>
+
           <h3>Why resize at all</h3>
           <ul>
             <li><strong>Upload limits</strong> — a form or forum caps the dimensions or the file size, and a smaller image simply goes through.</li>
@@ -87,6 +94,7 @@ export default function ImageResizerPage() {
       }
       faqs={[
         { question: "Will resizing distort my image?", answer: "No. Width and height are linked to the original aspect ratio, so entering one value updates the other and the shape stays intact." },
+        { question: "How do I resize an image to a set number of pixels?", answer: "Choose the image and type the width or height you want in pixels. The other side follows to keep the ratio. Then resize and download." },
         { question: "Can I make an image larger?", answer: "You can, but enlarging cannot add detail that was not captured, so results look softer. Resizing down keeps the most quality." },
         { question: "How is the resize quality kept high?", answer: "The tool uses a high-quality resampling step (pica) rather than a plain browser stretch, which keeps edges and text cleaner when scaling down." },
         { question: "Does resizing or compressing save more file size?", answer: "Resizing usually saves more. File size scales with the pixel count, so cutting the dimensions removes far more weight than lowering the quality slider alone. Resize first, then compress if needed." },
