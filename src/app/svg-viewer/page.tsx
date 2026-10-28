@@ -36,6 +36,13 @@ export default function SvgViewerPage() {
             mismatched with the width/height, an icon crops, stretches, or refuses to scale — one of the most
             common SVG export mistakes. This viewer shows both side by side so you can spot it in seconds.
           </p>
+          <h3>Is this an image viewer for other formats?</h3>
+          <p>
+            No. It opens SVG files only. For a PNG, JPG, or WebP, your browser or OS preview is enough. If you
+            need a different format, try the <Link href="/image-converter">image converter</Link>. Got a raster
+            image you want as a vector? Use <Link href="/image-to-svg">image to SVG</Link>. Need a DXF for a
+            cutter? Use <Link href="/svg-to-dxf">SVG to DXF</Link>. This page can&apos;t open DXF files.
+          </p>
           <h3>Safe by design</h3>
           <p>
             The preview renders your file like an image, which means <strong>scripts and external references

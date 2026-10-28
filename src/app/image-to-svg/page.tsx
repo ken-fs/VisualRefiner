@@ -40,6 +40,16 @@ export default function ImageToSvgPage() {
             sticker design, or a scanned drawing, it&apos;s usually very close. For a photo, you get a
             poster-like version with hundreds of color shapes.
           </p>
+          <h3>Using it as an SVG creator</h3>
+          <p>
+            This tool makes an SVG from an image you already have. It isn&apos;t a drawing editor, so you
+            can&apos;t draw shapes here. Draw or scan your design first, then drop it in. After that, open the
+            result in Inkscape or Figma to edit it.
+          </p>
+          <p>
+            SVG is a text format. A file holds shapes like paths, rectangles, and circles. You can check
+            the result in the <Link href="/svg-viewer">SVG viewer</Link> before you use it.
+          </p>
           <h3>Which style to pick</h3>
           <p>
             <strong>Logo / flat colors</strong> merges colors that are almost the same, so you get clean
